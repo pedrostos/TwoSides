@@ -10,12 +10,19 @@ public class Game extends Canvas implements Runnable{
 	private static final long serialVersionUID = 1L;
 	
 	public static JFrame jframe;
+	private Thread thread;
+	private boolean isRunning = true;
 	private final int WIDTH = 160;
 	private final int HEIGHT = 160;
 	private final int SCALE = 3;
 	
 	public Game ( ) {
-		this.setPreferredSize(new Dimension(WIDTH*SCALE,HEIGHT*SCALE));
+		setPreferredSize(new Dimension(WIDTH*SCALE,HEIGHT*SCALE));
+		initFrame();
+	}
+	
+	public void initFrame() {
+		
 		jframe = new JFrame();
 		jframe.add(this);
 		jframe.setResizable(false);
@@ -24,17 +31,58 @@ public class Game extends Canvas implements Runnable{
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jframe.setVisible(true);
 		jframe.setTitle("TwoSides");
+		
+	}
+	
+	public synchronized void start () {
+		thread = new Thread(this);
+		isRunning = true;
+		thread.start();
+	}
+	
+	public synchronized void stop () {
+		
 	}
 	
 	public static void main(String[] args) {
 		
 		Game game = new Game();
+		game.start();
+	}
+	
+	public void tick () {
+		
+	}
+	
+	public void render () {
 		
 	}
 
 	@Override
 	public void run() {
-	
+		long lastTime = System.nanoTime();
+		double amountOfTicks = 60.0;
+		double ns = 1000000000 / amountOfTicks;
+		double delta = 0;
+		int frames = 0;
+		double timer = System.currentTimeMillis();
+		
+		while(isRunning) {
+			long now = System.nanoTime();
+			delta += (now - lastTime) / ns;
+			lastTime = now;
+			if (delta > 1) {
+				tick();
+				render();
+				frames++;
+				delta--;
+			}
+			if (System.currentTimeMillis() - timer >= 1000) {
+				System.out.println("FPS: " + frames);
+				frames = 0;
+				timer+=1000;
+			}
+		}
 		
 	}
 
