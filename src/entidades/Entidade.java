@@ -3,7 +3,14 @@ package entidades;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import game.Game;
+
 public class Entidade {
+	
+		public static BufferedImage PacoteDeVida_Entidade = Game.spritesheet.getSprite(5*16, 0, 16, 16);
+		public static BufferedImage Arco_Entidade = Game.spritesheet.getSprite(6*16, 0, 16, 16);
+		public static BufferedImage Flecha_Entidade = Game.spritesheet.getSprite(5*16, 16, 16, 16);
+		public static BufferedImage Inimigo_Entidade = Game.spritesheet.getSprite(6*16, 16, 16, 16);
 	
 		protected int x;
 		protected int y;
