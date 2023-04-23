@@ -31,7 +31,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	
 	private BufferedImage image;
 	public List<Entidade> entidades;
-	public Spritesheet spritesheet;
+	public static Spritesheet spritesheet;
 	private Player player;
 	
 	
