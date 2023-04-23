@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import game.Game;
+import world.Camera;
 
 
 
@@ -66,13 +67,17 @@ public class Player extends Entidade{
 				}
 			}
 		}
+		// fazer a camera acompanhar o player
+		// pega a posição do jogador e verifica quanto falta pra ele ir para o centro da tela
+		Camera.x = this.getX() - (Game.WIDTH/2);
+		Camera.y = this.getY() - (Game.HEIGHT/2);
 	}
 	
 	public void render(Graphics g) {
 		if(direcao == right_dir) {
-		g.drawImage(rightPlayer[index], this.getX(), this.getY(), null);
+		g.drawImage(rightPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}else if(direcao == left_dir) {
-		g.drawImage(leftPlayer[index], this.getX(), this.getY(), null);
+		g.drawImage(leftPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 	}
 

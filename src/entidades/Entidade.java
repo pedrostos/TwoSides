@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import game.Game;
+import world.Camera;
 
 public class Entidade {
 	
@@ -55,7 +56,7 @@ public class Entidade {
 		
 		public void render(Graphics g) {
 			
-			g.drawImage(sprite, this.getX(), this.getY(), null);
+			g.drawImage(sprite, this.getX() - Camera.x, this.getY() - Camera.y, null);
 			
 		}
 		
