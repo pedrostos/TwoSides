@@ -43,10 +43,10 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		initFrame();
 		
 		//Inicializando objetos
-		world = new World("/map.png");
 		image = new BufferedImage (WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
 		entidades = new ArrayList<Entidade>();
 		spritesheet = new Spritesheet("/spritesheet.png");
+		world = new World("/map.png");
 		player = new Player(0,0,16,16,spritesheet.getSprite(0, 0, 16, 16));
 		entidades.add(player);
 		//fim
@@ -101,11 +101,12 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			return;
 		}
 		Graphics g = image.getGraphics();
-		g.setColor(new Color(19,19,19));
+		g.setColor(new Color(0,0,0));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
 		//renderização do jogo
-		Graphics2D g2 = (Graphics2D) g;
+		//Graphics2D g2 = (Graphics2D) g;
+		world.render(g);
 		for (int i=0; i < entidades.size(); i++ ) {
 			Entidade e = entidades.get(i);
 			e.render(g);
