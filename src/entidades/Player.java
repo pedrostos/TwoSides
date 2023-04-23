@@ -43,18 +43,18 @@ public class Player extends Entidade{
 	
 	public void tick() {
 		moved = false;
-		if(right) {
+		if(right && World.isFree((int)(x + speed),y)) {
 			moved = true;
 			direcao = right_dir;
 			x += speed;
-		} else if (left) {
+		} else if (left && World.isFree((int)(x - speed),y)) {
 			moved = true;
 			direcao = left_dir;
 			x -= speed;
-		} if (up) {
+		} if (up && World.isFree(x,(int)(y - speed))) {
 			moved = true;
 			y -= speed;
-		}else if (down) {
+		}else if (down && World.isFree(x, (int)(y+speed))) {
 			moved = true;
 			y += speed;
 		}

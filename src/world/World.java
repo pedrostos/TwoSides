@@ -15,8 +15,9 @@ import game.Game;
 
 public class World {
 	
-		private Tile[] tiles;
+		public static Tile[] tiles;
 		public static  int WIDTH,HEIGHT;
+		public static final int Tile_Size = 16;
 	
 		public World (String path) {
 			try {
@@ -61,6 +62,26 @@ public class World {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		//verificar se vai colidir com algo
+		public static boolean isFree(int xnext, int ynext) {
+			int x1 = xnext / Tile_Size;
+			int y1 = ynext / Tile_Size;
+			
+			int x2 = (xnext + Tile_Size - 1) / Tile_Size;
+			int y2 = ynext / Tile_Size;
+			
+			int x3 = xnext  / Tile_Size;
+			int y3 = (ynext + Tile_Size - 1) / Tile_Size;
+			
+			int x4 = (xnext + Tile_Size - 1) / Tile_Size;
+			int y4 = (ynext + Tile_Size - 1) / Tile_Size;
+			
+			return !((tiles[x1 + (y1*World.WIDTH)] instanceof ParedeTile) 
+					|| (tiles[x2 + (y2*World.WIDTH)] instanceof ParedeTile)
+					|| (tiles[x3 + (y3*World.WIDTH)] instanceof ParedeTile)
+					|| (tiles[x4 + (y4*World.WIDTH)] instanceof ParedeTile ));
 		}
 
 		public void render(Graphics g) {
