@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 import game.Game;
 import world.Camera;
+import world.World;
 
 
 
@@ -67,10 +68,10 @@ public class Player extends Entidade{
 				}
 			}
 		}
-		// fazer a camera acompanhar o player
+		// fazer a camera acompanhar o player e limitando até onde a camera pode ir
 		// pega a posição do jogador e verifica quanto falta pra ele ir para o centro da tela
-		Camera.x = this.getX() - (Game.WIDTH/2);
-		Camera.y = this.getY() - (Game.HEIGHT/2);
+		Camera.x = Camera.clamp(getX() - (Game.WIDTH/2),0,World.WIDTH * 16 - Game.WIDTH);
+		Camera.y = Camera.clamp(getY() - (Game.HEIGHT/2),0,World.HEIGHT * 16 - Game.HEIGHT);
 	}
 	
 	public void render(Graphics g) {
