@@ -45,7 +45,9 @@ public class World {
 							Game.player.setY(yy*16);
 						}else if (pixelAtual == 0xFFac3232) {
 							//pixel dos inimigos
-							Game.entidades.add(new Inimigo(xx*16,yy*16,16,16,Entidade.Inimigo_Entidade));
+							Inimigo inimigo = new Inimigo(xx*16,yy*16,16,16,Entidade.Inimigo_Entidade);
+							Game.entidades.add(inimigo);
+							Game.inimigos.add(inimigo);
 						}else if (pixelAtual == 0xFFdf7126) {
 							// pixel do arco
 							Game.entidades.add(new Arco(xx*16,yy*16,16,16,Entidade.Arco_Entidade));

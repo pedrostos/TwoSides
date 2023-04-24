@@ -11,10 +11,12 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.JFrame;
 
 import entidades.Entidade;
+import entidades.Inimigo;
 import entidades.Player;
 import graficos.Spritesheet;
 import world.World;
@@ -32,12 +34,15 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	public static  Player player;
 	private BufferedImage image;
 	public static List<Entidade> entidades;
+	public static List<Inimigo> inimigos;
 	public static Spritesheet spritesheet;
 	public static World world;
+	public static Random rand;
 	
 	
 	
 	public Game ( ) {
+		rand = new Random();
 		addKeyListener(this);
 		setPreferredSize(new Dimension(WIDTH*SCALE,HEIGHT*SCALE));
 		initFrame();
@@ -45,6 +50,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		//Inicializando objetos
 		image = new BufferedImage (WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
 		entidades = new ArrayList<Entidade>();
+		inimigos = new ArrayList<Inimigo>();
 		spritesheet = new Spritesheet("/spritesheet.png");
 		player = new Player(0,0,16,16,spritesheet.getSprite(0, 0, 16, 16));
 		entidades.add(player);

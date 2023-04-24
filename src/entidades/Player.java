@@ -15,7 +15,7 @@ public class Player extends Entidade{
 	public boolean right,up,down,left;
 	public int right_dir = 0 , left_dir = 1;
 	public int direcao = 0;
-	public double speed = 1.2;
+	public double speed = 2;
 	private int frames = 0;
 	private int maxFrames =5;
 	private int index = 0;
@@ -24,6 +24,8 @@ public class Player extends Entidade{
 	
 	private BufferedImage[] rightPlayer;
 	private BufferedImage[] leftPlayer;
+	
+	public int vida = 100;
 
 	public Player(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
@@ -43,18 +45,18 @@ public class Player extends Entidade{
 	
 	public void tick() {
 		moved = false;
-		if(right && World.isFree((int)(x + speed),y)) {
+		if(right && World.isFree((int)(x + speed),this.getY())) {
 			moved = true;
 			direcao = right_dir;
 			x += speed;
-		} else if (left && World.isFree((int)(x - speed),y)) {
+		}else if (left && World.isFree((int)(x - speed),this.getY())) {
 			moved = true;
 			direcao = left_dir;
 			x -= speed;
-		} if (up && World.isFree(x,(int)(y - speed))) {
+		} if (up && World.isFree(this.getX(),(int)(y - speed))) {
 			moved = true;
 			y -= speed;
-		}else if (down && World.isFree(x, (int)(y+speed))) {
+		}else if (down && World.isFree(this.getX(), (int)(y+speed))) {
 			moved = true;
 			y += speed;
 		}
