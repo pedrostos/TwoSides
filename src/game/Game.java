@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import entidades.Entidade;
 import entidades.Inimigo;
 import entidades.Player;
+import entidades.TiroDeFlecha;
 import graficos.Spritesheet;
 import graficos.UI;
 import world.World;
@@ -37,6 +38,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	private BufferedImage image;
 	public static List<Entidade> entidades;
 	public static List<Inimigo> inimigos;
+	public static List<TiroDeFlecha> flechas;
 	public static Spritesheet spritesheet;
 	public static World world;
 	public static Random rand;
@@ -54,6 +56,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		image = new BufferedImage (WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
 		entidades = new ArrayList<Entidade>();
 		inimigos = new ArrayList<Inimigo>();
+		flechas = new ArrayList<TiroDeFlecha>();
 		spritesheet = new Spritesheet("/spritesheet.png");
 		player = new Player(0,0,16,16,spritesheet.getSprite(0, 0, 16, 16));
 		entidades.add(player);
@@ -101,6 +104,9 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			Entidade e = entidades.get(i);
 			e.tick();
 		}
+		for(int i = 0; i < flechas.size(); i++) {
+			flechas.get(i).tick();
+		}
 	}
 	
 	public void render () {
@@ -119,6 +125,9 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		for (int i=0; i < entidades.size(); i++ ) {
 			Entidade e = entidades.get(i);
 			e.render(g);
+		}
+		for(int i = 0; i < flechas.size(); i++) {
+			flechas.get(i).render(g);;
 		}
 		ui.render(g);
 		//fim
@@ -198,7 +207,10 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		}	else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
 			player.down = false;
 			//parar de mover para baixo quando não pressionar a seta pra baixo ou a tecla S
-		}	
+		} if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+			// aperta o espaço para começar atirar
+			player.tiro = true;
+		}
 		
 	}
 
