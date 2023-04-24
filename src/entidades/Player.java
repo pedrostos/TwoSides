@@ -70,10 +70,28 @@ public class Player extends Entidade{
 				}
 			}
 		}
+		
+		this.checkCollisionPacoteDeVida();
+		
 		// fazer a camera acompanhar o player e limitando até onde a camera pode ir
 		// pega a posição do jogador e verifica quanto falta pra ele ir para o centro da tela
 		Camera.x = Camera.clamp(getX() - (Game.WIDTH/2),0,World.WIDTH * 16 - Game.WIDTH);
 		Camera.y = Camera.clamp(getY() - (Game.HEIGHT/2),0,World.HEIGHT * 16 - Game.HEIGHT);
+	}
+	
+	public void checkCollisionPacoteDeVida() {
+		for (int i=0; i < Game.entidades.size(); i++ ) {
+			Entidade atual = Game.entidades.get(i);
+			if(atual instanceof PacoteDeVida) {
+				if(Entidade.isColidding(this, atual)) {
+					vida+=10;
+					if(vida > 100) {
+						vida = 100;
+					}
+					Game.entidades.remove(atual);
+				}
+			}
+		}
 	}
 	
 	public void render(Graphics g) {
