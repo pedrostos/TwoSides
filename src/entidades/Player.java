@@ -25,7 +25,9 @@ public class Player extends Entidade{
 	private BufferedImage[] rightPlayer;
 	private BufferedImage[] leftPlayer;
 	
+	public int flechas = 0; 
 	public static double vida = 100 , maxVida = 100;
+	
 
 	public Player(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
@@ -72,6 +74,7 @@ public class Player extends Entidade{
 		}
 		
 		this.checkCollisionPacoteDeVida();
+		this.checkCollisionFlechas();
 		
 		// fazer a camera acompanhar o player e limitando até onde a camera pode ir
 		// pega a posição do jogador e verifica quanto falta pra ele ir para o centro da tela
@@ -88,6 +91,18 @@ public class Player extends Entidade{
 					if(vida > 100) {
 						vida = 100;
 					}
+					Game.entidades.remove(atual);
+				}
+			}
+		}
+	}
+	
+	public void checkCollisionFlechas() {
+		for (int i=0; i < Game.entidades.size(); i++ ) {
+			Entidade atual = Game.entidades.get(i);
+			if(atual instanceof Flechas) {
+				if(Entidade.isColidding(this, atual)) {
+					flechas += 3;
 					Game.entidades.remove(atual);
 				}
 			}
