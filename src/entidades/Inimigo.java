@@ -42,14 +42,11 @@ public class Inimigo extends Entidade{
 			y -= speed;
 		}
 		} else {
+			// estamos colidindo
 			if(Game.rand.nextInt(100) < 10) {
 				Game.player.vida -= Game.rand.nextInt(3);
-				if(Game.player.vida <= 0) {
-					//Gamer Over
-					System.exit(1);
-				}
-			System.out.println("Vida: " + Game.player.vida);
-			}
+				Game.player.isDamaged = true;
+			
 			
 		}
 		frames++;
@@ -59,6 +56,7 @@ public class Inimigo extends Entidade{
 			if (index == maxIndex) {
 				index = 0;
 			}
+		}
 		}
 	 
 }

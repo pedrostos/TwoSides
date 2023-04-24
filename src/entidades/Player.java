@@ -2,8 +2,10 @@ package entidades;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import game.Game;
+import graficos.Spritesheet;
 import world.Camera;
 import world.World;
 
@@ -24,10 +26,12 @@ public class Player extends Entidade{
 	
 	private BufferedImage[] rightPlayer;
 	private BufferedImage[] leftPlayer;
+	private BufferedImage playerDamage;
+	private int damageFrames = 0;
 	
 	public int flechas = 0; 
-	public static double vida = 100 , maxVida = 100;
-	
+	public  double vida = 100 , maxVida = 100;
+	public boolean isDamaged = false;
 
 	public Player(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
@@ -35,6 +39,7 @@ public class Player extends Entidade{
 		
 		rightPlayer = new BufferedImage[5];
 		leftPlayer = new BufferedImage[5];
+		playerDamage = Game.spritesheet.getSprite(0, 48, 16, 16);
 		
 		for (int i=0; i < 5; i++) {
 			rightPlayer[i] = Game.spritesheet.getSprite(0 + (i*16), 0, 16, 16);
@@ -76,6 +81,26 @@ public class Player extends Entidade{
 		this.checkCollisionPacoteDeVida();
 		this.checkCollisionFlechas();
 		
+		// metodo para piscar ao tomar dano
+		if(isDamaged) {
+			this.damageFrames++;
+			if(this.damageFrames == 8) {
+				this.damageFrames = 0;
+				isDamaged = false;
+			}
+		}
+		
+		// se a vida chegar a 0 o jogo vai ser reiniciado
+		if(vida <= 0) {
+			Game.entidades = new ArrayList<Entidade>();
+			Game.inimigos = new ArrayList<Inimigo>();
+			Game.spritesheet = new Spritesheet("/spritesheet.png");
+			Game.player = new Player(0,0,16,16,Game.spritesheet.getSprite(0, 0, 16, 16));
+			Game.entidades.add(Game.player);
+			Game.world = new World("/map.png");
+			return;
+		}
+		
 		// fazer a camera acompanhar o player e limitando até onde a camera pode ir
 		// pega a posição do jogador e verifica quanto falta pra ele ir para o centro da tela
 		Camera.x = Camera.clamp(getX() - (Game.WIDTH/2),0,World.WIDTH * 16 - Game.WIDTH);
@@ -110,10 +135,14 @@ public class Player extends Entidade{
 	}
 	
 	public void render(Graphics g) {
+		if(!isDamaged) {
 		if(direcao == right_dir) {
 		g.drawImage(rightPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}else if(direcao == left_dir) {
 		g.drawImage(leftPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+		}
+		}else {
+			g.drawImage(playerDamage, this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 	}
 
