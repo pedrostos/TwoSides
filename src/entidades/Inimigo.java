@@ -10,7 +10,7 @@ import world.World;
 
 public class Inimigo extends Entidade{
 	
-	private double speed = 1;
+	private double speed = 1.2;
 	private int maskx = 8, masky = 8, maskw = 10, maskh = 10;
 	private int frames = 0;
 	private int maxFrames = 3;
@@ -43,7 +43,11 @@ public class Inimigo extends Entidade{
 		}
 		} else {
 			if(Game.rand.nextInt(100) < 10) {
-			Game.player.vida--;
+				Game.player.vida -= Game.rand.nextInt(3);
+				if(Game.player.vida <= 0) {
+					//Gamer Over
+					System.exit(1);
+				}
 			System.out.println("Vida: " + Game.player.vida);
 			}
 			

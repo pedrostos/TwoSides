@@ -19,6 +19,7 @@ import entidades.Entidade;
 import entidades.Inimigo;
 import entidades.Player;
 import graficos.Spritesheet;
+import graficos.UI;
 import world.World;
 
 public class Game extends Canvas implements Runnable,KeyListener{
@@ -38,7 +39,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	public static Spritesheet spritesheet;
 	public static World world;
 	public static Random rand;
-	
+	public UI ui;
 	
 	
 	public Game ( ) {
@@ -47,7 +48,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		setPreferredSize(new Dimension(WIDTH*SCALE,HEIGHT*SCALE));
 		initFrame();
 		
-		//Inicializando objetos
+		//Inicializando objeto
+		ui = new UI();
 		image = new BufferedImage (WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
 		entidades = new ArrayList<Entidade>();
 		inimigos = new ArrayList<Inimigo>();
@@ -117,6 +119,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			Entidade e = entidades.get(i);
 			e.render(g);
 		}
+		ui.render(g);
 		//fim
 		g.dispose();
 		g = bs.getDrawGraphics();

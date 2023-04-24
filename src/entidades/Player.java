@@ -25,7 +25,7 @@ public class Player extends Entidade{
 	private BufferedImage[] rightPlayer;
 	private BufferedImage[] leftPlayer;
 	
-	public int vida = 100;
+	public static double vida = 100 , maxVida = 100;
 
 	public Player(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
