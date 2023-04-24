@@ -15,7 +15,7 @@ public class Player extends Entidade{
 	public boolean right,up,down,left;
 	public int right_dir = 0 , left_dir = 1;
 	public int direcao = 0;
-	public double speed = 2;
+	public double speed = 1.4;
 	private int frames = 0;
 	private int maxFrames =5;
 	private int index = 0;

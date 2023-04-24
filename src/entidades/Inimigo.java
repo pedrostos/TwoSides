@@ -10,7 +10,7 @@ import world.World;
 
 public class Inimigo extends Entidade{
 	
-	private double speed = 1.2;
+	private double speed = 0.6;
 	private int maskx = 8, masky = 8, maskw = 10, maskh = 10;
 	private int frames = 0;
 	private int maxFrames = 3;
@@ -18,7 +18,7 @@ public class Inimigo extends Entidade{
 	private int maxIndex = 1;
 	private BufferedImage[] sprites;
 
-	public Inimigo(int x, int y, int width, int height, BufferedImage sprite) {
+	public Inimigo(int x, int y, int width, int height, BufferedImage[] sprite) {
 		super(x, y, width, height, null);
 		sprites = new BufferedImage[2];
 		sprites[0] = Game.spritesheet.getSprite(96, 16, 16, 16);
@@ -27,17 +27,17 @@ public class Inimigo extends Entidade{
 
 	public void tick() {
 		if(isColiddingWithPlayer() == false) {
-		if(x < Game.player.getX() && World.isFree((int)(x+speed), this.getY())
+		if((int)x < Game.player.getX() && World.isFree((int)(x+speed), this.getY())
 				&& !isColidding((int)(x+speed), this.getY())) {
 			x += speed;
-		} else if (x > Game.player.getX() && World.isFree((int)(x-speed), this.getY())
+		} else if ((int)x > Game.player.getX() && World.isFree((int)(x-speed), this.getY())
 				&& !isColidding((int)(x-speed), this.getY())) {
 			x -= speed;
 		}
-		if(y < Game.player.getY() && World.isFree(this.getX(),(int)(y+speed))
+		if((int)y < Game.player.getY() && World.isFree(this.getX(),(int)(y+speed))
 				&& !isColidding (this.getX() ,(int)(y+speed))) {
 			y += speed;
-		} else if (y > Game.player.getY() && World.isFree(this.getX(),(int)(y-speed))
+		} else if ((int)y > Game.player.getY() && World.isFree(this.getX(),(int)(y-speed))
 				&& !isColidding(this.getX(),(int)(y-speed))) {
 			y -= speed;
 		}

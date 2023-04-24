@@ -13,8 +13,8 @@ public class Entidade {
 		public static BufferedImage Flecha_Entidade = Game.spritesheet.getSprite(5*16, 16, 16, 16);
 		public static BufferedImage Inimigo_Entidade = Game.spritesheet.getSprite(6*16, 16, 16, 16);
 	
-		protected int x;
-		protected int y;
+		protected double x;
+		protected double y;
 		protected int widht;
 		protected int height;
 		

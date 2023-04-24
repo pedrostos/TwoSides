@@ -45,7 +45,10 @@ public class World {
 							Game.player.setY(yy*16);
 						}else if (pixelAtual == 0xFFac3232) {
 							//pixel dos inimigos
-							Inimigo inimigo = new Inimigo(xx*16,yy*16,16,16,Entidade.Inimigo_Entidade);
+							BufferedImage[] buf = new BufferedImage[2];
+							buf[0] = Game.spritesheet.getSprite(96, 16, 16, 16);
+							buf[1] = Game.spritesheet.getSprite(112, 16, 16, 16);
+							Inimigo inimigo = new Inimigo(xx*16,yy*16,16,16,buf);
 							Game.entidades.add(inimigo);
 							Game.inimigos.add(inimigo);
 						}else if (pixelAtual == 0xFFdf7126) {
