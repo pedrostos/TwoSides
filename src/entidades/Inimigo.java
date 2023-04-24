@@ -1,5 +1,6 @@
 package entidades;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -16,6 +17,10 @@ public class Inimigo extends Entidade{
 	private int maxFrames = 3;
 	private int index = 0;
 	private int maxIndex = 1;
+	private int vida = 10;
+	private boolean estaTomandoDano = false;
+	private int danoFrames = 10,danoAtual = 0;
+	
 	private BufferedImage[] sprites;
 
 	public Inimigo(int x, int y, int width, int height, BufferedImage[] sprite) {
@@ -57,9 +62,41 @@ public class Inimigo extends Entidade{
 				index = 0;
 			}
 		}
+		isColiddingFlecha();
+		if(vida <=0 ) {
+			seAutoDestroi();
+			return;
 		}
-	 
+		if(estaTomandoDano) {
+			this.danoAtual++;
+			if(this.danoAtual == this.danoFrames) {
+				this.danoAtual = 0;
+				this.estaTomandoDano = false;
+			}
+		}
+		}
+		
+
 }
+	
+	
+	public void seAutoDestroi () {
+		Game.entidades.remove(this);
+	}
+	
+	public void isColiddingFlecha() {
+		for (int i = 0; i < Game.flechas.size(); i++) {
+			Entidade e = Game.flechas.get(i);
+			if (e instanceof TiroDeFlecha) {
+				if(Entidade.isColidding(this, e)) {
+					estaTomandoDano = true;
+					vida -= 5;
+					Game.flechas.remove(i);
+					return;
+				}
+			}
+		}
+	}
 	
 	public boolean isColiddingWithPlayer () {
 		Rectangle atualInimigo = new Rectangle(this.getX() + maskx ,this.getY() + masky,maskw,maskh);
@@ -86,10 +123,14 @@ public class Inimigo extends Entidade{
 	
 	public void render(Graphics g) {
 		super.render(g);
-		g.drawImage(sprites[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+		if(!estaTomandoDano) {
+			g.drawImage(sprites[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+		} else {
+			g.drawImage(Entidade.InimigoTomandoDano, this.getX() - Camera.x, this.getY() - Camera.y, null);
+			g.setColor(Color.blue);
+			g.fillRect(this.getX() + maskx - Camera.x, this.getY() + masky - Camera.y, maskw, maskh);
+		}
 		
-		//g.setColor(Color.blue);
-		//g.fillRect(this.getX() + maskx - Camera.x, this.getY() + masky - Camera.y, maskw, maskh);
 	}
 }
  

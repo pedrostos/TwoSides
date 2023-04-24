@@ -157,7 +157,7 @@ public class Player extends Entidade{
 			Entidade atual = Game.entidades.get(i);
 			if(atual instanceof Flechas) {
 				if(Entidade.isColidding(this, atual)) {
-					flechas += 5;
+					flechas += 10;
 					Game.entidades.remove(atual);
 				}
 			}
@@ -176,6 +176,7 @@ public class Player extends Entidade{
 		}
 	}
 	
+	// tentar arrumar dps o sistema da flecha
 	public void render(Graphics g) {
 		if(!isDamaged) {
 		if(direcao == right_dir) {
@@ -184,17 +185,11 @@ public class Player extends Entidade{
 			//arco para direita
 			g.drawImage(Entidade.ArcoParaDireita, this.getX()+6 - Camera.x, this.getY() +2 - Camera.y, null);
 		}
-		if(tiro == true) {
-			g.drawImage(Entidade.FlechaParaDireta, this.getX() - Camera.x, this.getY() - Camera.y, null);
-		}
 		}else if(direcao == left_dir) {
 		g.drawImage(leftPlayer[index], this.getX() +8 - Camera.x, this.getY() -1 - Camera.y, null);
 		if(arco) {
 			//arco para esquerda
 			g.drawImage(Entidade.ArcoParaEsquerda, this.getX() - Camera.x, this.getY() - Camera.y, null);
-		}
-		if(tiro == true) {
-			g.drawImage(Entidade.FlechaParaEsquerda, this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 		}
 		}else {

@@ -17,6 +17,8 @@ public class Entidade {
 		public static BufferedImage ArcoParaDireita = Game.spritesheet.getSprite(96, 0, 16, 16);
 		public static BufferedImage FlechaParaEsquerda = Game.spritesheet.getSprite(80, 16, 16, 16);
 		public static BufferedImage FlechaParaDireta = Game.spritesheet.getSprite(80, 32, 16, 16);
+		public static BufferedImage InimigoTomandoDano = Game.spritesheet.getSprite(16, 48, 16, 16);
+		
 	
 		protected double x;
 		protected double y;
