@@ -42,6 +42,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	public static World world;
 	public static Random rand;
 	public UI ui;
+	private int levelAtual = 1, maxLevel = 6;
 	
 	
 	public Game ( ) {
@@ -108,7 +109,13 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		}
 		
 		if(inimigos.size() == 0) {
-			System.out.println("Proximo level");
+			if(inimigos.size() == 0) {
+			// avançar para o prox level 
+			levelAtual++;
+			if(levelAtual > maxLevel ) {
+				
+			}
+		}
 		}
 	}
 	
@@ -211,7 +218,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			player.down = false;
 			//parar de mover para baixo quando não pressionar a seta pra baixo ou a tecla S
 		} if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-			// aperta o espaço para começar atirar
+			// aperta o espaço para começar atirar 
 			player.tiro = true;
 		}
 		
