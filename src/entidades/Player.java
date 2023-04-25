@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+
 import game.Game;
 import graficos.Spritesheet;
 import world.Camera;
@@ -16,7 +17,7 @@ public class Player extends Entidade{
 	
 	public boolean right,up,down,left;
 	public int right_dir = 0 , left_dir = 1;
-	public int direcao = 0;
+	public int direcao = right_dir;
 	public double speed = 1.4;
 	private int frames = 0;
 	private int maxFrames =5;
@@ -34,6 +35,7 @@ public class Player extends Entidade{
 	public  double vida = 100 , maxVida = 100;
 	public boolean isDamaged = false;
 	public boolean tiro = false;
+	
 
 	public Player(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
@@ -74,7 +76,7 @@ public class Player extends Entidade{
 			if (frames == maxFrames) {
 				frames = 0;
 				index ++;
-				if (index == maxIndex) {
+				if (index > maxIndex) {
 					index = 0;
 				}
 			}
@@ -99,7 +101,6 @@ public class Player extends Entidade{
 			// verificar se tem o arco e flechas para atirar na direção certa
 			if(arco && flechas > 0) {
 			flechas --;
-			tiro = false;
 			int dx = 0;
 			int px = 0;
 			int py = 0;
@@ -112,7 +113,7 @@ public class Player extends Entidade{
 				 px = 6;
 				 dx = -1;
 			}
-			TiroDeFlecha flecha = new TiroDeFlecha(this.getX() + px ,this.getY() + py ,3,3,null,dx,0);
+			TiroDeFlecha flecha = new TiroDeFlecha(this.getX()  + px ,this.getY() + py ,3,3,null,dx,0);
 			Game.flechas.add(flecha);
 			}
 		}
@@ -183,8 +184,9 @@ public class Player extends Entidade{
 		g.drawImage(rightPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		if(arco) {
 			//arco para direita
-			g.drawImage(Entidade.ArcoParaDireita, this.getX()+6 - Camera.x, this.getY() +2 - Camera.y, null);
+			g.drawImage(Entidade.ArcoParaDireita, this.getX() +6 - Camera.x, this.getY() + 2 - Camera.y, null);
 		}
+		
 		}else if(direcao == left_dir) {
 		g.drawImage(leftPlayer[index], this.getX() +8 - Camera.x, this.getY() -1 - Camera.y, null);
 		if(arco) {
@@ -194,8 +196,7 @@ public class Player extends Entidade{
 		}
 		}else {
 			g.drawImage(playerDamage, this.getX() - Camera.x, this.getY() - Camera.y, null);
-		}
-		
 	}
-
+		
+}
 }

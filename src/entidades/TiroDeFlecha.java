@@ -9,14 +9,14 @@ import world.Camera;
 
 public class TiroDeFlecha extends Entidade{
 
-	private int dx;
-	private int dy;
-	private int speed = 4;
+	private double dx;
+	private double dy;
+	private double speed = 4;
 	
 	//se quiser dificultar o jogo e melhorar a performance para ir removendo as balas ao decorrer do tempo
 	//private int vida = 10, vidaAtual = 0;
 	
-	public TiroDeFlecha(int x, int y, int width, int height, BufferedImage sprite,int dx,int dy) {
+	public TiroDeFlecha(int x, int y, int width , int height, BufferedImage sprite,double dx,double dy) {
 		super(x, y, width, height, sprite);
 		this.dx = dx;
 		this.dy = dy;
@@ -36,8 +36,8 @@ public class TiroDeFlecha extends Entidade{
 		
 	public void render (Graphics g) {
 	
-		g.setColor(Color.yellow);
-		g.fillOval(this.getX() - Camera.x, this.getY() - Camera.y, widht, height);
+		g.setColor(Color.black);
+		g.fillOval(this.getX() - Camera.x, this.getY()  - Camera.y, widht + 4 , height +1);
 		//g.drawImage(Entidade.Flecha_Entidade, this.getX() - Camera.x, this.getY() - Camera.y,null);
 		
 	}
