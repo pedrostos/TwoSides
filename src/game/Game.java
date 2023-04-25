@@ -106,6 +106,10 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		for(int i = 0; i < flechas.size(); i++) {
 			flechas.get(i).tick();
 		}
+		
+		if(inimigos.size() == 0) {
+			System.out.println("Proximo level");
+		}
 	}
 	
 	public void render () {
