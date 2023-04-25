@@ -15,8 +15,8 @@ public class Entidade {
 		public static BufferedImage Inimigo_Entidade = Game.spritesheet.getSprite(6*16, 16, 16, 16);
 		public static BufferedImage ArcoParaEsquerda = Game.spritesheet.getSprite(112, 0, 16, 16);
 		public static BufferedImage ArcoParaDireita = Game.spritesheet.getSprite(96, 0, 16, 16);
-		public static BufferedImage FlechaParaEsquerda = Game.spritesheet.getSprite(80, 16, 16, 16);
-		public static BufferedImage FlechaParaDireta = Game.spritesheet.getSprite(80, 32, 16, 16);
+		public static BufferedImage FlechaParaEsquerda = Game.spritesheet.getSprite(80, 32, 16, 16);
+		public static BufferedImage FlechaParaDireta = Game.spritesheet.getSprite(80, 16, 16, 16);
 		public static BufferedImage InimigoTomandoDano = Game.spritesheet.getSprite(16, 48, 16, 16);
 		
 	

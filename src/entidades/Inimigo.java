@@ -12,12 +12,12 @@ import world.World;
 public class Inimigo extends Entidade{
 	
 	private double speed = 0.6;
-	private int maskx = 8, masky = 8, maskw = 10, maskh = 10;
+	private int maskx = -4, masky = 4, maskw = 23, maskh = 22;
 	private int frames = 0;
 	private int maxFrames = 3;
 	private int index = 0;
 	private int maxIndex = 1;
-	private int vida = 10;
+	private int vida = 9;
 	private boolean estaTomandoDano = false;
 	private int danoFrames = 10,danoAtual = 0;
 	
@@ -90,7 +90,7 @@ public class Inimigo extends Entidade{
 			if (e instanceof TiroDeFlecha) {
 				if(Entidade.isColidding(this, e)) {
 					estaTomandoDano = true;
-					vida -= 5;
+					vida -= 3;
 					Game.flechas.remove(i);
 					return;
 				}
@@ -127,8 +127,10 @@ public class Inimigo extends Entidade{
 			g.drawImage(sprites[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		} else {
 			g.drawImage(Entidade.InimigoTomandoDano, this.getX() - Camera.x, this.getY() - Camera.y, null);
-			g.setColor(Color.blue);
-			g.fillRect(this.getX() + maskx - Camera.x, this.getY() + masky - Camera.y, maskw, maskh);
+			
+			//teste da colisao do inimigo
+			//g.setColor(Color.blue);
+			//g.fillRect(this.getX() + maskx - Camera.x, this.getY() + masky - Camera.y, maskw, maskh);
 		}
 		
 	}

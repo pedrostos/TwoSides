@@ -118,7 +118,7 @@ public class Player extends Entidade{
 		}
 		
 		// se a vida chegar a 0 o jogo vai ser reiniciado
-		if(vida <= 0) {
+		/*if(vida <= 0) {
 			Game.entidades = new ArrayList<Entidade>();
 			Game.inimigos = new ArrayList<Inimigo>();
 			Game.spritesheet = new Spritesheet("/spritesheet.png");
@@ -126,7 +126,7 @@ public class Player extends Entidade{
 			Game.entidades.add(Game.player);
 			Game.world = new World("/map.png");
 			return;
-		}
+		}*/
 		
 		// fazer a camera acompanhar o player e limitando até onde a camera pode ir
 		// pega a posição do jogador e verifica quanto falta pra ele ir para o centro da tela 
