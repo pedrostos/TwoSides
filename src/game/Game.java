@@ -32,7 +32,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	private boolean isRunning = true;
 	public static final int WIDTH = 240;
 	public static final int HEIGHT = 160;
-	private final int SCALE = 3;
+	public static final int SCALE = 3;
 	public static  Player player;
 	private BufferedImage image;
 	public static List<Entidade> entidades;
@@ -41,9 +41,10 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	public static Spritesheet spritesheet;
 	public static World world;
 	public static Random rand;
+	public Menu menu;
 	public UI ui;
 	private int levelAtual = 1, maxLevel = 6;
-	public static String estadoDoJogo = "Normal";
+	public static String estadoDoJogo = "Menu";
 	private boolean mostrarMensagemGameOver = true;
 	private int framesGameOver = 0;
 	private boolean reiniciarOJogo = false;
@@ -65,6 +66,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		player = new Player(0,0,16,16,spritesheet.getSprite(0, 0, 16, 16));
 		entidades.add(player);
 		world = new World("/level1.png");
+		menu = new Menu();
 		//fim
 		
 	}
@@ -141,6 +143,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 				String novoMundo = "level" + levelAtual + ".png";
 				World.reiniciarOJogo(novoMundo);
 			}
+		} else if (estadoDoJogo == "Menu") {
+			menu.tick();
 		}
 		} 
 	
@@ -183,6 +187,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			g.setFont(new Font("arial",Font.BOLD,30));
 			if(mostrarMensagemGameOver)
 			g.drawString("--> Para reiniciar o jogo aperte a tecla Enter <--", (WIDTH*SCALE) / 2 - 330, (HEIGHT*SCALE) /2 +40);
+		} else if (estadoDoJogo == "Menu") {
+			menu.render(g);
 		}
 		bs.show();
 				
@@ -245,18 +251,25 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	public void keyReleased(KeyEvent e) {
 	
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
-			player.right = false;
 			// parar de mover para direita quando não pressionar a seta pra direita ou a tecla D
+			player.right = false;
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
-			player.left = false;
 			//parar de mover para esquerda quando não pressionar a seta da esquerda ou a tecla A
+			player.left = false;
 		}
 		if(e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
-			player.up = false;
 			// parar de mover para cima quando não pressionar a seta pra cima ou a tecla W
+			player.up = false;
+			if (estadoDoJogo == "Menu") {
+				menu.up = true;
+			}
 		}	else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
-			player.down = false;
 			//parar de mover para baixo quando não pressionar a seta pra baixo ou a tecla S
+			player.down = false;
+			if (estadoDoJogo == "Menu") {
+				menu.down = true;
+			}
+			
 		} if(e.getKeyCode() == KeyEvent.VK_SPACE) {
 			// aperta o espaço para começar atirar  S
 			player.tiro = true;
