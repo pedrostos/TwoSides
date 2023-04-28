@@ -160,7 +160,6 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
 		//renderização do jogo
-		//Graphics2D g2 = (Graphics2D) g;
 		world.render(g);
 		for (int i=0; i < entidades.size(); i++ ) {
 			Entidade e = entidades.get(i);
@@ -243,7 +242,16 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			//mover para baixo pressionando a seta pra baixo ou a tecla S
 		}	
 		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+			// selecionar a opção do menu com o enter
 			reiniciarOJogo = true;
+			if(estadoDoJogo == "Menu") {
+				menu.enter = true;
+			}
+		}
+		if (e.getKeyCode() == KeyEvent.VK_ESCAPE || e.getKeyCode() == KeyEvent.VK_P ) {
+			// entrar na pausa
+			estadoDoJogo = "Menu";
+			menu.pausa = true;
 		}
 	}
 

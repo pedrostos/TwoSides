@@ -3,13 +3,16 @@ package game;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 
 public class Menu {
 	
 	public String[] opcoes = {"Novo Jogo","Sair"};
 	public int opcaoAtual = 0;
 	public int maxOpcao = opcoes.length - 1;
-	public boolean up,down;
+	public boolean up,down,enter;
+	public boolean pausa = false;
 
 	public void tick () {
 		if(up) {
@@ -24,12 +27,22 @@ public class Menu {
 			if(opcaoAtual > maxOpcao)
 				opcaoAtual = 0;
 		}
+		if(enter) {
+			enter = false;
+			if(opcoes[opcaoAtual] == "Novo Jogo" || opcoes[opcaoAtual] == "Continuar") {
+				Game.estadoDoJogo = "Normal";
+				pausa = false;
+			}else if (opcoes[opcaoAtual] == "Sair") {
+				System.exit(1);
+			}
+		}
 	}
 	
 	public void render(Graphics g) {
 		//menu
-		g.setColor(Color.black);
-		g.fillRect(0, 0, Game.WIDTH*Game.SCALE, Game.HEIGHT*Game.SCALE);
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setColor(new Color(0,0,0,100));
+		g2.fillRect(0, 0, Game.WIDTH*Game.SCALE, Game.HEIGHT*Game.SCALE);
 		g.setColor(Color.green);
 		g.setFont(new Font("arial",Font.BOLD,50));
 		g.drawString("TWO SIDES", (Game.WIDTH*Game.SCALE) /2 - 150, (Game.WIDTH*Game.SCALE) /2 - 250 );
@@ -37,7 +50,10 @@ public class Menu {
 		// opções do menu
 		g.setFont(new Font("arial",Font.BOLD,25));
 		g.setColor(Color.white);
+		if(pausa == false)
 		g.drawString("Novo Jogo ", (Game.WIDTH*Game.SCALE) /2 - 80, (Game.WIDTH*Game.SCALE) /2 - 175);
+		else
+			g.drawString("Continuar", (Game.WIDTH*Game.SCALE) /2 - 80, (Game.WIDTH*Game.SCALE) /2 - 175);
 		g.drawString("Sair", (Game.WIDTH*Game.SCALE) /2 - 48, (Game.WIDTH*Game.SCALE) /2 - 125);
 		
 		if(opcoes[opcaoAtual] == "Novo Jogo") {
