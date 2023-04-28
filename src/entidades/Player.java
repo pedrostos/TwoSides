@@ -118,15 +118,10 @@ public class Player extends Entidade{
 			}
 		}
 		
-		// se a vida chegar a 0 o jogo vai ser reiniciado
+		// se a vida chegar a 0 o jogo acaba = game over
 		if(vida <= 0) {
-			Game.entidades = new ArrayList<Entidade>();
-			Game.inimigos = new ArrayList<Inimigo>();
-			Game.spritesheet = new Spritesheet("/spritesheet.png");
-			Game.player = new Player(0,0,16,16,Game.spritesheet.getSprite(0, 0, 16, 16));
-			Game.entidades.add(Game.player);
-			Game.world = new World("/map.png");
-			return;
+			vida = 0;
+			Game.estadoDoJogo = "Game_Over";
 		}
 		
 		// fazer a camera acompanhar o player e limitando até onde a camera pode ir
@@ -177,7 +172,7 @@ public class Player extends Entidade{
 		}
 	}
 	
-	// tentar arrumar dps o sistema da flecha
+
 	public void render(Graphics g) {
 		if(!isDamaged) {
 		if(direcao == right_dir) {

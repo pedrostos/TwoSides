@@ -43,6 +43,10 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	public static Random rand;
 	public UI ui;
 	private int levelAtual = 1, maxLevel = 6;
+	public static String estadoDoJogo = "Normal";
+	private boolean mostrarMensagemGameOver = true;
+	private int framesGameOver = 0;
+	private boolean reiniciarOJogo = false;
 	
 	
 	public Game ( ) {
@@ -60,7 +64,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		spritesheet = new Spritesheet("/spritesheet.png");
 		player = new Player(0,0,16,16,spritesheet.getSprite(0, 0, 16, 16));
 		entidades.add(player);
-		world = new World("/map.png");
+		world = new World("/level1.png");
 		//fim
 		
 	}
@@ -100,6 +104,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	}
 	
 	public void tick () {
+		if(estadoDoJogo == "Normal") {
+			reiniciarOJogo = false;
 		for (int i=0; i < entidades.size(); i++ ) {
 			Entidade e = entidades.get(i);
 			e.tick();
@@ -108,16 +114,36 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			flechas.get(i).tick();
 		}
 		
-		if(inimigos.size() == 0) {
+		
 			if(inimigos.size() == 0) {
 			// avançar para o prox level 
 			levelAtual++;
 			if(levelAtual > maxLevel ) {
+				levelAtual =1 ;
+			}
+			String novoMundo = "level" + levelAtual + ".png";
+			World.reiniciarOJogo(novoMundo);
+			}
+			
+		} else if (estadoDoJogo == "Game_Over") {
+			this.framesGameOver ++;
+			if (this.framesGameOver == 30) {
+				this.framesGameOver = 0;
+				if(this.mostrarMensagemGameOver) 
+					this.mostrarMensagemGameOver = false;
+					else 
+						this.mostrarMensagemGameOver = true;
 				
+			} if(reiniciarOJogo) {
+				reiniciarOJogo = false;
+				estadoDoJogo = "Normal";
+				levelAtual =1 ;
+				String novoMundo = "level" + levelAtual + ".png";
+				World.reiniciarOJogo(novoMundo);
 			}
 		}
-		}
-	}
+		} 
+	
 	
 	public void render () {
 		BufferStrategy bs = this.getBufferStrategy();
@@ -147,6 +173,17 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		g.setFont(new Font("arial",Font.BOLD,20));
 		g.setColor(Color.white);
 		g.drawString("Flechas: " + player.flechas , 600, 20);
+		if (estadoDoJogo == "Game_Over") {
+			Graphics2D g2 = (Graphics2D) g;
+			g2.setColor(new Color(0,0,0,100));
+			g2.fillRect(0, 0, WIDTH*SCALE, HEIGHT*SCALE);
+			g.setFont(new Font("arial",Font.BOLD,40));
+			g.setColor(Color.white);
+			g.drawString("Game Over !!!", (WIDTH*SCALE) / 2 - 110, (HEIGHT*SCALE) /2 - 15);
+			g.setFont(new Font("arial",Font.BOLD,30));
+			if(mostrarMensagemGameOver)
+			g.drawString("--> Para reiniciar o jogo aperte a tecla Enter <--", (WIDTH*SCALE) / 2 - 330, (HEIGHT*SCALE) /2 +40);
+		}
 		bs.show();
 				
 	}
@@ -199,6 +236,9 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			player.down = true;
 			//mover para baixo pressionando a seta pra baixo ou a tecla S
 		}	
+		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+			reiniciarOJogo = true;
+		}
 	}
 
 	@Override
@@ -218,7 +258,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			player.down = false;
 			//parar de mover para baixo quando não pressionar a seta pra baixo ou a tecla S
 		} if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-			// aperta o espaço para começar atirar 
+			// aperta o espaço para começar atirar  S
 			player.tiro = true;
 		}
 		

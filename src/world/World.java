@@ -3,6 +3,7 @@ package world;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -11,7 +12,9 @@ import entidades.Entidade;
 import entidades.Flechas;
 import entidades.Inimigo;
 import entidades.PacoteDeVida;
+import entidades.Player;
 import game.Game;
+import graficos.Spritesheet;
 
 public class World {
 	
@@ -87,6 +90,16 @@ public class World {
 					|| (tiles[x2 + (y2*World.WIDTH)] instanceof ParedeTile)
 					|| (tiles[x3 + (y3*World.WIDTH)] instanceof ParedeTile)
 					|| (tiles[x4 + (y4*World.WIDTH)] instanceof ParedeTile ));
+		}
+		
+		public static void reiniciarOJogo (String level) {
+			Game.entidades = new ArrayList<Entidade>();
+			Game.inimigos = new ArrayList<Inimigo>();
+			Game.spritesheet = new Spritesheet("/spritesheet.png");
+			Game.player = new Player(0,0,16,16,Game.spritesheet.getSprite(0, 0, 16, 16));
+			Game.entidades.add(Game.player);
+			Game.world = new World("/" + level);
+			return;
 		}
 
 		public void render(Graphics g) {
