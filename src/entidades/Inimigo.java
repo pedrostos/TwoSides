@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import game.Game;
+import game.Sons;
 import world.Camera;
 import world.World;
 
@@ -49,6 +50,7 @@ public class Inimigo extends Entidade{
 		} else {
 			// estamos colidindo
 			if(Game.rand.nextInt(100) < 10) {
+				Sons.somDoHit.play();
 				Game.player.vida -= Game.rand.nextInt(3);
 				Game.player.isDamaged = true;
 			}
