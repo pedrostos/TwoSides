@@ -41,6 +41,9 @@ public class Menu {
 				opcaoAtual = 0;
 		}
 		if(enter) {
+			//adicionando musica ao começar o jogo
+			Sons.musica.loop();
+			Sons.musica.setVolume(-28);
 			enter = false;
 			if(opcoes[opcaoAtual] == "Novo Jogo" || opcoes[opcaoAtual] == "Continuar") {
 				Game.estadoDoJogo = "Normal";

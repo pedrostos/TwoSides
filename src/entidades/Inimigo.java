@@ -50,7 +50,10 @@ public class Inimigo extends Entidade{
 		} else {
 			// estamos colidindo
 			if(Game.rand.nextInt(100) < 10) {
-				Sons.somDoHit.play();
+				// adicionando som ao tomar hit
+				Sons.hit.tocar();
+				Sons.hit.setVolume(-20);
+				
 				Game.player.vida -= Game.rand.nextInt(3);
 				Game.player.isDamaged = true;
 			}

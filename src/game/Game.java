@@ -51,7 +51,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	
 	
 	public Game ( ) {
-		Sons.musicaDeFundo.loop();
+		//Sons.musicaDeFundo.loop();
 		rand = new Random();
 		addKeyListener(this);
 		setPreferredSize(new Dimension(WIDTH*SCALE,HEIGHT*SCALE));
