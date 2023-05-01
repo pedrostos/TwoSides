@@ -189,8 +189,10 @@ public class Player extends Entidade{
 			g.drawImage(Entidade.ArcoParaEsquerda, this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 		}
-		}else {
-			g.drawImage(playerDamage, this.getX() - Camera.x, this.getY() - Camera.y, null);
+		}else if (direcao == right_dir){
+			g.drawImage(Entidade.PlayerTomandoHitDireita, this.getX() - Camera.x, this.getY() - Camera.y, null);
+	} else {
+		g.drawImage(Entidade.PlayerTomandoHitEsquerda, this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
 		
 }

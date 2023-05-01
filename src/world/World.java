@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import entidades.Arco;
+import entidades.Boss;
 import entidades.Entidade;
 import entidades.Flechas;
 import entidades.Inimigo;
@@ -35,13 +36,21 @@ public class World {
 				for (int xx =0; xx < map.getWidth(); xx++) {
 					for(int yy =0; yy < map.getHeight(); yy++) {
 						int pixelAtual = pixels[xx + (yy*map.getWidth())];
-						tiles[xx + (yy*WIDTH)] = new ChaoTile(xx*16,yy*16,Tile.Tile_Chao);
-						if(pixelAtual == 0xFF000000) {	
-							// pixel do chão
-							tiles[xx + (yy*WIDTH)] = new ChaoTile(xx*16,yy*16,Tile.Tile_Chao);
-						}else if (pixelAtual == 0xFFFFFFFF) {
+						tiles[xx + (yy*WIDTH)] = new ChaoTile(xx*16,yy*16,Tile.Tile_Padrao)  ;
+							
+							if(pixelAtual == 0xFF000000 ) {
+								tiles[xx + (yy*WIDTH)] = new ChaoTile(xx*16,yy*16,Tile.Tile_Chao);
+								// pixel do chão
+							}else if (pixelAtual == 0xFF76428a ){	
+								// pixel do chão queimado
+									tiles[xx + (yy*WIDTH)] = new ChaoTile(xx*16,yy*16,Tile.Tile_ChaoQueimado);
+							}
+						else if (pixelAtual == 0xFFFFFFFF) {
 							// pixel da parede
 							tiles[xx + (yy*WIDTH)] = new ParedeTile(xx*16,yy*16,Tile.Tile_Parede);
+						}else if (pixelAtual == 0xFF8a6f30)	 {
+							//pixel da parede com fogo
+							tiles[xx + (yy*WIDTH)] = new ParedeTile(xx*16,yy*16,Tile.Tile_ParedeQueimada);
 						}else if (pixelAtual == 0xFF5fcde4) {
 							// pixel do personagem
 							Game.player.setX(xx*16);
@@ -63,7 +72,18 @@ public class World {
 						}else if (pixelAtual == 0xFFfbf236) {
 							// pixel das flechas
 							Game.entidades.add(new Flechas(xx*16,yy*16,16,16,Entidade.Flecha_Entidade));
+						}else if (pixelAtual == 0xFFd77bba) {
+							//pixel do boss
+							BufferedImage[] buf = new BufferedImage[1];
+							buf[0] = Game.spritesheet.getSprite(0, 96, 16, 16);
+							Boss boss = new Boss(xx*16,yy*16,16,16,null);
+							Game.entidades.add(boss);
+							Game.boss.add(boss);
+							
+							
+							//Game.entidades.add(new Boss(xx*16,yy*16,16,16,Entidade.Boss_Entidade));
 						}
+						
 					}
 				}
 				
@@ -95,7 +115,7 @@ public class World {
 		public static void reiniciarOJogo (String level) {
 			Game.entidades = new ArrayList<Entidade>();
 			Game.inimigos = new ArrayList<Inimigo>();
-			Game.spritesheet = new Spritesheet("/spritesheet.png");
+			Game.spritesheet = new Spritesheet("/spritesheeet.png");
 			Game.player = new Player(0,0,16,16,Game.spritesheet.getSprite(0, 0, 16, 16));
 			Game.entidades.add(Game.player);
 			Game.world = new World("/" + level);

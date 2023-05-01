@@ -43,7 +43,7 @@ public class Menu {
 		if(enter) {
 			//adicionando musica ao começar o jogo
 			Sons.musica.loop();
-			Sons.musica.setVolume(-28);
+			Sons.musica.setVolume(-35);
 			enter = false;
 			if(opcoes[opcaoAtual] == "Novo Jogo" || opcoes[opcaoAtual] == "Continuar") {
 				Game.estadoDoJogo = "Normal";

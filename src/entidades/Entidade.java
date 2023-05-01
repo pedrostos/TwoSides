@@ -18,6 +18,11 @@ public class Entidade {
 		public static BufferedImage FlechaParaEsquerda = Game.spritesheet.getSprite(80, 32, 16, 16);
 		public static BufferedImage FlechaParaDireta = Game.spritesheet.getSprite(80, 16, 16, 16);
 		public static BufferedImage InimigoTomandoDano = Game.spritesheet.getSprite(16, 48, 16, 16);
+		public static BufferedImage Boss_Entidade = Game.spritesheet.getSprite(0, 96, 16, 16);
+		public static BufferedImage BossTomandoHitDireita = Game.spritesheet.getSprite(32, 48, 16, 16);
+		public static BufferedImage BossTomandoHitEsquerda = Game.spritesheet.getSprite(48, 48, 16, 16);
+		public static BufferedImage PlayerTomandoHitDireita = Game.spritesheet.getSprite(0, 48, 16, 16);
+		public static BufferedImage PlayerTomandoHitEsquerda = Game.spritesheet.getSprite(0, 80, 16, 16);
 		
 	
 		protected double x;
