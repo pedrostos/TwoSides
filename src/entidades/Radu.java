@@ -10,7 +10,7 @@ import game.Sons;
 import world.Camera;
 import world.World;
 
-public class Boss extends Entidade{
+public class Radu extends Entidade{
 	
 	private double speed = 0.9;
 	private int maskx = -4, masky = 4, maskw = 16, maskh = 16;
@@ -30,7 +30,7 @@ public class Boss extends Entidade{
 	private  boolean moved = false;
 
 
-	public Boss(int x, int y, int width, int height, BufferedImage boss_Entidade) {
+	public Radu(int x, int y, int width, int height, BufferedImage boss_Entidade) {
 		super(x, y, width, height, null);
 		rightBoss = new BufferedImage[2];
 		leftBoss = new BufferedImage[2];
@@ -143,7 +143,7 @@ public class Boss extends Entidade{
 		Rectangle atualInimigo = new Rectangle(xnext + maskx,ynext + masky,maskw,maskh);
 		
 		for(int i = 0; i < Game.boss.size(); i++ ) {
-			Boss e = Game.boss.get(i);
+			Radu e = Game.boss.get(i);
 			if(e == this) {
 				continue;
 			}

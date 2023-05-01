@@ -15,9 +15,10 @@ import java.util.List;
 import java.util.Random;
 import javax.swing.JFrame;
 
-import entidades.Boss;
+import entidades.Radu;
 import entidades.Entidade;
 import entidades.Inimigo;
+import entidades.PaiDoRadu;
 import entidades.Player;
 import entidades.TiroDeFlecha;
 import graficos.Spritesheet;
@@ -38,7 +39,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	private BufferedImage image;
 	public static List<Entidade> entidades;
 	public static List<Inimigo> inimigos;
-	public static List<Boss> boss;
+	public static List<Radu> boss;
+	public static List<PaiDoRadu> chefao;
 	public static List<TiroDeFlecha> flechas;
 	public static Spritesheet spritesheet;
 	public static World world;
@@ -64,7 +66,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		image = new BufferedImage (WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
 		entidades = new ArrayList<Entidade>();
 		inimigos = new ArrayList<Inimigo>();
-		boss = new ArrayList<Boss>();
+		boss = new ArrayList<Radu>();
+		chefao = new ArrayList<PaiDoRadu>();
 		flechas = new ArrayList<TiroDeFlecha>();
 		spritesheet = new Spritesheet("/spritesheeet.png");
 		player = new Player(0,0,16,16,spritesheet.getSprite(0, 0, 16, 16));

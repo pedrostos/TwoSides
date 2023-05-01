@@ -8,11 +8,12 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import entidades.Arco;
-import entidades.Boss;
+import entidades.Radu;
 import entidades.Entidade;
 import entidades.Flechas;
 import entidades.Inimigo;
 import entidades.PacoteDeVida;
+import entidades.PaiDoRadu;
 import entidades.Player;
 import game.Game;
 import graficos.Spritesheet;
@@ -73,12 +74,19 @@ public class World {
 							// pixel das flechas
 							Game.entidades.add(new Flechas(xx*16,yy*16,16,16,Entidade.Flecha_Entidade));
 						}else if (pixelAtual == 0xFFd77bba) {
-							//pixel do boss
+							//pixel do radu
 							BufferedImage[] buf = new BufferedImage[1];
 							buf[0] = Game.spritesheet.getSprite(0, 96, 16, 16);
-							Boss boss = new Boss(xx*16,yy*16,16,16,null);
+							Radu boss = new Radu(xx*16,yy*16,16,16,null);
 							Game.entidades.add(boss);
 							Game.boss.add(boss);
+						}else if (pixelAtual == 0xFF09fa04) {
+							//pixel do paidoradu
+							BufferedImage[] buf = new BufferedImage[1];
+							buf[0] = Game.spritesheet.getSprite(0, 96, 16, 16);
+							PaiDoRadu chefao = new PaiDoRadu(xx*16,yy*16,16,16,null);
+							Game.entidades.add(chefao);
+							Game.chefao.add(chefao);
 							
 							
 							//Game.entidades.add(new Boss(xx*16,yy*16,16,16,Entidade.Boss_Entidade));
