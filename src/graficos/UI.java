@@ -17,6 +17,8 @@ public class UI {
 		g.setColor(Color.white);
 		g.setFont(new Font("arial",Font.BOLD,8));
 		g.drawString((int)Game.player.vida+"/"+(int)Game.player.maxVida, 18, 11);
+		g.setFont(new Font("arial",Font.BOLD,10));
+		g.drawString("Fase: " + Game.levelAtual, 100, 8);
 	}
 	
 }

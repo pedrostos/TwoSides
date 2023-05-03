@@ -166,8 +166,8 @@ public class PaiDoRadu extends Entidade{
 			
 		}
 	}  else if(direcao == right_dir) {
-		g.drawImage(Entidade.BossTomandoHitDireita, this.getX() - Camera.x, this.getY() - Camera.y, null);
+		g.drawImage(Entidade.ChefaoTomandoHitDireita, this.getX() - Camera.x, this.getY() - Camera.y, null);
 	} else
-		g.drawImage(Entidade.BossTomandoHitEsquerda, this.getX() - Camera.x, this.getY() - Camera.y, null);
+		g.drawImage(Entidade.ChefaoTomandoHitEsquerda, this.getX() - Camera.x, this.getY() - Camera.y, null);
 }
 }

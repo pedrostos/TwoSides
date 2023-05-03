@@ -23,15 +23,19 @@ public class Entidade {
 		public static BufferedImage BossTomandoHitEsquerda = Game.spritesheet.getSprite(48, 48, 16, 16);
 		public static BufferedImage PlayerTomandoHitDireita = Game.spritesheet.getSprite(0, 48, 16, 16);
 		public static BufferedImage PlayerTomandoHitEsquerda = Game.spritesheet.getSprite(0, 80, 16, 16);
+		public static BufferedImage ChefaoTomandoHitDireita = Game.spritesheet.getSprite(16, 80, 16, 16);
+		public static BufferedImage ChefaoTomandoHitEsquerda = Game.spritesheet.getSprite(32, 80, 16, 16);
 		
 	
-		protected double x;
-		protected double y;
+		public double x;
+		public double y;
 		protected int widht;
 		protected int height;
 		
 		private BufferedImage sprite;
 		private int maskx,masky,mwidth,mheight;
+		
+		
 		
 		public Entidade (int x, int y ,int width, int height,BufferedImage sprite) {
 			this.x = x;

@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import entidades.Arco;
 import entidades.Radu;
 import entidades.Entidade;
+import entidades.Lia;
 import entidades.Flechas;
 import entidades.Inimigo;
 import entidades.PacoteDeVida;
@@ -87,11 +88,14 @@ public class World {
 							PaiDoRadu chefao = new PaiDoRadu(xx*16,yy*16,16,16,null);
 							Game.entidades.add(chefao);
 							Game.chefao.add(chefao);
-							
-							
-							//Game.entidades.add(new Boss(xx*16,yy*16,16,16,Entidade.Boss_Entidade));
-						}
-						
+						}else if (pixelAtual == 0xFFff28ff) {
+							//pixel da Lia
+							BufferedImage[] buf = new BufferedImage[1];
+							buf[0] = Game.spritesheet.getSprite(0, 96, 16, 16);
+							Lia gatinha = new Lia(xx*16,yy*16,16,16,null);
+							Game.entidades.add(gatinha);
+							Game.lia.add(gatinha);
+						}		
 					}
 				}
 				

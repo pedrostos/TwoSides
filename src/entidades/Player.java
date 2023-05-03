@@ -1,6 +1,7 @@
 package entidades;
 
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -27,7 +28,7 @@ public class Player extends Entidade{
 	
 	private BufferedImage[] rightPlayer;
 	private BufferedImage[] leftPlayer;
-	private BufferedImage playerDamage;
+	//private BufferedImage playerDamage;
 	
 	private boolean arco = false;
 	private int damageFrames = 0;
@@ -43,7 +44,7 @@ public class Player extends Entidade{
 		
 		rightPlayer = new BufferedImage[5];
 		leftPlayer = new BufferedImage[5];
-		playerDamage = Game.spritesheet.getSprite(0, 48, 16, 16);
+		//playerDamage = Game.spritesheet.getSprite(0, 48, 16, 16);
 		
 		for (int i=0; i < 5; i++) {
 			rightPlayer[i] = Game.spritesheet.getSprite(0 + (i*16), 0, 16, 16);

@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import entidades.Radu;
 import entidades.Entidade;
 import entidades.Inimigo;
+import entidades.Lia;
 import entidades.PaiDoRadu;
 import entidades.Player;
 import entidades.TiroDeFlecha;
@@ -45,14 +46,22 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	public static Spritesheet spritesheet;
 	public static World world;
 	public static Random rand;
+	public static List<Lia> lia;
 	public Menu menu;
 	public UI ui;
-	private int levelAtual = 1, maxLevel = 6;
+	
+	public static int levelAtual = 1, maxLevel = 4;
 	public static String estadoDoJogo = "Menu";
 	private boolean mostrarMensagemGameOver = true;
 	private int framesGameOver = 0;
 	private boolean reiniciarOJogo = false;
 	
+		//cutscene 
+	public static int entrada = 1;
+	public static int comecar = 2;
+	public static int jogando = 3;
+	public static int estado_cena = entrada ; 
+	public int timeCena = 0, maxTimeCena = 60*7;
 	
 	public Game ( ) {
 		//Sons.musicaDeFundo.loop();
@@ -71,6 +80,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		flechas = new ArrayList<TiroDeFlecha>();
 		spritesheet = new Spritesheet("/spritesheeet.png");
 		player = new Player(0,0,16,16,spritesheet.getSprite(0, 0, 16, 16));
+		lia = new ArrayList<Lia>();
 		entidades.add(player);
 		world = new World("/level1.png");
 		menu = new Menu();
@@ -115,6 +125,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	public void tick () {
 		if(estadoDoJogo == "Normal") {
 			reiniciarOJogo = false;
+			
+			if (Game.estado_cena == Game.jogando) {
 		for (int i=0; i < entidades.size(); i++ ) {
 			Entidade e = entidades.get(i);
 			e.tick();
@@ -122,8 +134,20 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		for(int i = 0; i < flechas.size(); i++) {
 			flechas.get(i).tick();
 		}
-		
-		
+			} else {
+				if (Game.estado_cena == Game.entrada) {
+					if(player.getX() < 100) {
+						player.x++;
+					} else {
+						Game.estado_cena = Game.comecar;
+					}
+				} else if (Game.estado_cena == Game.comecar) {
+					timeCena++;
+					if(timeCena == maxTimeCena) {
+						Game.estado_cena = Game.jogando;
+					}
+			}
+			}
 			if(inimigos.size() == 0 && boss.size() == 0) {
 			// avançar para o prox level 
 			levelAtual++;
@@ -195,6 +219,18 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			g.drawString("--> Para reiniciar o jogo aperte a tecla Enter <--", (WIDTH*SCALE) / 2 - 330, (HEIGHT*SCALE) /2 +40);
 		} else if (estadoDoJogo == "Menu") {
 			menu.render(g);
+		}
+		if(Game.estado_cena == Game.comecar) {
+			g.setColor(Color.white);
+			g.fillRect(9,9, Game.WIDTH*Game.SCALE-18, Game.HEIGHT*Game.SCALE-18);
+			g.setColor(Color.blue);
+			g.fillRect(10,10, Game.WIDTH*Game.SCALE-20, Game.HEIGHT*Game.SCALE-20);
+			g.setFont(new Font("Arial",Font.BOLD,20));
+			g.setColor(Color.white);
+			g.drawString("Dicas:", 100,50);
+			g.drawString("1: Lia foi raptada, Você tem que acha-la", 100,80);
+			g.drawString("2: No caminho tem inimigos derrote eles", 100,110);
+			g.drawString("3: Procure quem fez isso com a Lia.", 100,140);
 		}
 		bs.show();
 				
@@ -287,7 +323,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			
 		} if(e.getKeyCode() == KeyEvent.VK_SPACE) {
 			// aperta o espaço para começar atirar  S
-			player.tiro = true;
+			player.tiro =true;
 		}
 		
 	}
