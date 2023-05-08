@@ -24,6 +24,7 @@ import entidades.Player;
 import entidades.TiroDeFlecha;
 import graficos.Spritesheet;
 import graficos.UI;
+import world.Camera;
 import world.World;
 
 public class Game extends Canvas implements Runnable,KeyListener{
@@ -50,7 +51,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	public Menu menu;
 	public UI ui;
 	
-	public static int levelAtual = 1, maxLevel = 4;
+	public static int levelAtual = 1, maxLevel = 5;
 	public static String estadoDoJogo = "Menu";
 	private boolean mostrarMensagemGameOver = true;
 	private int framesGameOver = 0;
@@ -61,7 +62,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	public static int comecar = 2;
 	public static int jogando = 3;
 	public static int estado_cena = entrada ; 
-	public int timeCena = 0, maxTimeCena = 60*7;
+	public int timeCena = 0, maxTimeCena = 60*1;
 	
 	public Game ( ) {
 		//Sons.musicaDeFundo.loop();
@@ -126,6 +127,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		if(estadoDoJogo == "Normal") {
 			reiniciarOJogo = false;
 			
+			if(Game.levelAtual == 1) {
 			if (Game.estado_cena == Game.jogando) {
 		for (int i=0; i < entidades.size(); i++ ) {
 			Entidade e = entidades.get(i);
@@ -145,9 +147,52 @@ public class Game extends Canvas implements Runnable,KeyListener{
 					timeCena++;
 					if(timeCena == maxTimeCena) {
 						Game.estado_cena = Game.jogando;
+						timeCena = 0;
 					}
+				}
+				}
+				}
+			
+			if(Game.levelAtual == 2) {
+				player.y = 80;
+				Camera.y = Camera.clamp(getY() - (Game.HEIGHT/2),0,World.HEIGHT * 16 - Game.HEIGHT);
+				if (Game.estado_cena == Game.jogando) {
+			for (int i=0; i < entidades.size(); i++ ) {
+				Entidade e = entidades.get(i);
+				e.tick();
 			}
+			for(int i = 0; i < flechas.size(); i++) {
+				flechas.get(i).tick();
 			}
+				} else {
+					if (Game.estado_cena == Game.entrada) {
+							if(player.getX()  < 200 ) {	
+								if (player.getX()  > 0 && player.getX() < 226) {
+								Camera.x = Camera.clamp(getX() + (Game.WIDTH/2),0,World.WIDTH * 16 - Game.WIDTH);
+								}
+								if (player.getX()  > 226) {
+									Camera.x = Camera.clamp(getX() + (Game.WIDTH/2),0,World.WIDTH * 16 - Game.WIDTH);
+									}
+					
+							player.x++;
+							
+						} else {
+							Game.estado_cena = Game.comecar;
+						}
+					} else if (Game.estado_cena == Game.comecar) {
+						timeCena++;
+						if(timeCena == maxTimeCena) {
+							Game.estado_cena = Game.jogando;
+							timeCena = 0;
+						}
+					}
+					}
+			}		
+			
+			System.out.println(player.x);
+			System.out.println(player.y);
+				
+			
 			if(inimigos.size() == 0 && boss.size() == 0) {
 			// avançar para o prox level 
 			levelAtual++;
@@ -156,6 +201,9 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			}
 			String novoMundo = "level" + levelAtual + ".png";
 			World.reiniciarOJogo(novoMundo);
+			Game.estado_cena = Game.entrada;
+			timeCena = 0;
+			timeCena++;
 			}
 			
 		} else if (estadoDoJogo == "Game_Over") {
@@ -177,7 +225,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		} else if (estadoDoJogo == "Menu") {
 			menu.tick();
 		}
-		} 
+		}
+		
 	
 	
 	public void render () {
@@ -220,7 +269,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		} else if (estadoDoJogo == "Menu") {
 			menu.render(g);
 		}
-		if(Game.estado_cena == Game.comecar) {
+		if(Game.estado_cena == Game.comecar && Game.levelAtual == 1) {
 			g.setColor(Color.white);
 			g.fillRect(9,9, Game.WIDTH*Game.SCALE-18, Game.HEIGHT*Game.SCALE-18);
 			g.setColor(Color.blue);
@@ -232,6 +281,18 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			g.drawString("2: No caminho tem inimigos derrote eles", 100,110);
 			g.drawString("3: Procure quem fez isso com a Lia.", 100,140);
 		}
+//		if(Game.estado_cena == Game.comecar && Game.levelAtual == 2) {
+//			g.setColor(Color.white);
+//			g.fillRect(9,9, Game.WIDTH*Game.SCALE-18, Game.HEIGHT*Game.SCALE-18);
+//			g.setColor(Color.blue);
+//			g.fillRect(10,10, Game.WIDTH*Game.SCALE-20, Game.HEIGHT*Game.SCALE-20);
+//			g.setFont(new Font("Arial",Font.BOLD,20));
+//			g.setColor(Color.white);
+//			g.drawString("Dicas:", 100,50);
+//			g.drawString("1: teste", 100,80);
+//			g.drawString("2: No caminho tem inimigos derrote eles", 100,110);
+//			g.drawString("3: Procure quem fez isso com a Lia.", 100,140);
+//		}
 		bs.show();
 				
 	}

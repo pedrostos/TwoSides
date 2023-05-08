@@ -18,7 +18,7 @@ public class Inimigo extends Entidade{
 	private int maxFrames = 20;
 	private int index = 0;
 	private int maxIndex = 1;
-	private int vida = 9;
+	private int vida = 3;
 	private boolean estaTomandoDano = false;
 	private int danoFrames = 10,danoAtual = 0;
 	
