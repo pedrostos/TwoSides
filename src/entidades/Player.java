@@ -26,6 +26,7 @@ public class Player extends Entidade{
 	private int maxIndex = 4;
 	private  boolean moved = false;
 	
+	private BufferedImage[] jumpPlayer;
 	private BufferedImage[] rightPlayer;
 	private BufferedImage[] leftPlayer;
 	//private BufferedImage playerDamage;
@@ -41,7 +42,7 @@ public class Player extends Entidade{
 	public Player(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
 		
-		
+		jumpPlayer = new BufferedImage[5];
 		rightPlayer = new BufferedImage[5];
 		leftPlayer = new BufferedImage[5];
 		//playerDamage = Game.spritesheet.getSprite(0, 48, 16, 16);
@@ -52,6 +53,11 @@ public class Player extends Entidade{
 			for (int i=0; i < 5; i++) {
 			leftPlayer[i] = Game.spritesheet.getSprite(64 - (i*16), 16, 16, 16);
 		}
+			for (int i=0; i < 5; i++) {
+				jumpPlayer[i] = Game.spritesheet.getSprite(80 + (i*16), 64, 16, 16);
+			}
+			
+			
 		
 	}
 	
@@ -175,7 +181,7 @@ public class Player extends Entidade{
 
 	public void render(Graphics g) {
 		if(!isDamaged) {
-		if(direcao == right_dir) {
+		if(direcao == right_dir && Game.levelAtual != 6) {
 		g.drawImage(rightPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		if(arco) {
 			//arco para direita
@@ -194,6 +200,9 @@ public class Player extends Entidade{
 	} else {
 		g.drawImage(Entidade.PlayerTomandoHitEsquerda, this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
+		if(direcao == right_dir && Game.levelAtual == 6) {
+			g.drawImage(jumpPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
+		}
 		
 }
 }

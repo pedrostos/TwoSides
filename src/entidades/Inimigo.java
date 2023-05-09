@@ -12,7 +12,7 @@ import world.World;
 
 public class Inimigo extends Entidade{
 	
-	private double speed = 0.4;
+	private double speed = 0.5;
 	private int maskx = -4, masky = 4, maskw = 16, maskh = 16;
 	private int frames = 0;
 	private int maxFrames = 20;
@@ -30,6 +30,8 @@ public class Inimigo extends Entidade{
 		sprites[0] = Game.spritesheet.getSprite(96, 16, 16, 16);
 		sprites[1] = Game.spritesheet.getSprite(96+16, 16, 16, 16);
 	}
+	
+	
 
 	public void tick() {
 		if(isColiddingWithPlayer() == false) {

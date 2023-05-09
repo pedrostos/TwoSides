@@ -16,6 +16,7 @@ import java.util.Random;
 import javax.swing.JFrame;
 
 import entidades.Radu;
+import entidades.Cutscene;
 import entidades.Entidade;
 import entidades.Inimigo;
 import entidades.Lia;
@@ -44,6 +45,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	public static List<Radu> boss;
 	public static List<PaiDoRadu> chefao;
 	public static List<TiroDeFlecha> flechas;
+	public static List<Cutscene> cut;
 	public static Spritesheet spritesheet;
 	public static World world;
 	public static Random rand;
@@ -51,9 +53,9 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	public Menu menu;
 	public UI ui;
 	
-	public static int levelAtual = 1, maxLevel = 5;
+	public static int levelAtual = 1, maxLevel = 6;
 	public static String estadoDoJogo = "Menu";
-	private boolean mostrarMensagemGameOver = true;
+	public  boolean mostrarMensagemGameOver = true;
 	private int framesGameOver = 0;
 	private boolean reiniciarOJogo = false;
 	
@@ -62,7 +64,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	public static int comecar = 2;
 	public static int jogando = 3;
 	public static int estado_cena = entrada ; 
-	public int timeCena = 0, maxTimeCena = 60*1;
+	public int timeCena = 0, maxTimeCena = 60*15;
 	
 	public Game ( ) {
 		//Sons.musicaDeFundo.loop();
@@ -79,6 +81,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		boss = new ArrayList<Radu>();
 		chefao = new ArrayList<PaiDoRadu>();
 		flechas = new ArrayList<TiroDeFlecha>();
+		cut = new ArrayList<Cutscene>();
 		spritesheet = new Spritesheet("/spritesheeet.png");
 		player = new Player(0,0,16,16,spritesheet.getSprite(0, 0, 16, 16));
 		lia = new ArrayList<Lia>();
@@ -101,6 +104,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		jframe.setTitle("TwoSides");
 		
 	}
+	
 	
 	public synchronized void start () {
 		thread = new Thread(this);
@@ -129,6 +133,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			
 			if(Game.levelAtual == 1) {
 			if (Game.estado_cena == Game.jogando) {
+				//Inimigo.vida --;
 		for (int i=0; i < entidades.size(); i++ ) {
 			Entidade e = entidades.get(i);
 			e.tick();
@@ -138,7 +143,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		}
 			} else {
 				if (Game.estado_cena == Game.entrada) {
-					if(player.getX() < 100) {
+					if(player.getX() < -55) {
 						player.x++;
 					} else {
 						Game.estado_cena = Game.comecar;
@@ -152,11 +157,10 @@ public class Game extends Canvas implements Runnable,KeyListener{
 				}
 				}
 				}
-			
+
 			if(Game.levelAtual == 2) {
-				player.y = 80;
-				Camera.y = Camera.clamp(getY() - (Game.HEIGHT/2),0,World.HEIGHT * 16 - Game.HEIGHT);
 				if (Game.estado_cena == Game.jogando) {
+					//Inimigo.vida --;
 			for (int i=0; i < entidades.size(); i++ ) {
 				Entidade e = entidades.get(i);
 				e.tick();
@@ -166,12 +170,48 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			}
 				} else {
 					if (Game.estado_cena == Game.entrada) {
-							if(player.getX()  < 200 ) {	
-								if (player.getX()  > 0 && player.getX() < 226) {
-								Camera.x = Camera.clamp(getX() + (Game.WIDTH/2),0,World.WIDTH * 16 - Game.WIDTH);
+						player.y = 144;
+						if(player.getX() < -55) {
+							player.x++;
+						} else {
+							Game.estado_cena = Game.comecar;
+						}
+					} else if (Game.estado_cena == Game.comecar) {
+						timeCena++;
+						if(timeCena == maxTimeCena) {
+							Game.estado_cena = Game.jogando;
+							timeCena = 0;
+						}
+					}
+					}
+					}
+			if(Game.levelAtual == 3) {
+				player.y = 80;
+				Camera.y = Camera.clamp(getY() - (Game.HEIGHT/2),0,World.HEIGHT * 16 - Game.HEIGHT);
+				if (Game.estado_cena == Game.jogando) {
+					
+					for(int i=0; i <= Cutscene.vida; i++) {
+						Cutscene.vida --;
+						
+					}
+			for (int i=0; i < entidades.size(); i++ ) {
+				Entidade e = entidades.get(i);
+				e.tick();
+			}
+			for(int i = 0; i < flechas.size(); i++) {
+				flechas.get(i).tick();
+			}
+				} else {
+					if (Game.estado_cena == Game.entrada) {
+							if(player.getX()  < 190 ) {	
+								if (player.getX()  > 0 && player.getX() < 150) {
+								Camera.x = Camera.clamp(getX() - (Game.WIDTH/2),0,World.WIDTH * 16 - Game.WIDTH);
 								}
-								if (player.getX()  > 226) {
-									Camera.x = Camera.clamp(getX() + (Game.WIDTH/2),0,World.WIDTH * 16 - Game.WIDTH);
+								if (player.getX()  > 150 && player.getX() < 190) {
+									Camera.x = Camera.clamp(getX() +(Game.WIDTH),0,World.WIDTH * 16 - Game.WIDTH);
+									}
+								if (player.getX()  > 190) {
+									Camera.x = Camera.clamp(getX() +(Game.WIDTH),0,World.WIDTH * 16 - Game.WIDTH);
 									}
 					
 							player.x++;
@@ -187,13 +227,108 @@ public class Game extends Canvas implements Runnable,KeyListener{
 						}
 					}
 					}
-			}		
+			}	
 			
+			if(Game.levelAtual == 4) {
+				if (Game.estado_cena == Game.jogando) {
+					//Inimigo.vida --;
+			for (int i=0; i < entidades.size(); i++ ) {
+				Entidade e = entidades.get(i);
+				e.tick();
+			}
+			for(int i = 0; i < flechas.size(); i++) {
+				flechas.get(i).tick();
+			}
+				} else {
+					if (Game.estado_cena == Game.entrada) {
+						if(player.getX() < -55) {
+							player.x++;
+						} else {
+							Game.estado_cena = Game.comecar;
+						}
+					} else if (Game.estado_cena == Game.comecar) {
+						timeCena++;
+						if(timeCena == maxTimeCena) {
+							Game.estado_cena = Game.jogando;
+							timeCena = 0;
+						}
+					}
+					}
+					}
+			
+			if(Game.levelAtual == 5) {
+				if (Game.estado_cena == Game.jogando) {
+					//Inimigo.vida --;
+			for (int i=0; i < entidades.size(); i++ ) {
+				Entidade e = entidades.get(i);
+				e.tick();
+			}
+			for(int i = 0; i < flechas.size(); i++) {
+				flechas.get(i).tick();
+			}
+				} else {
+					if (Game.estado_cena == Game.entrada) {
+						if(player.getX() < -55) {
+							player.x++;
+						} else {
+							Game.estado_cena = Game.comecar;
+						}
+					} else if (Game.estado_cena == Game.comecar) {
+						timeCena++;
+						if(timeCena == maxTimeCena) {
+							Game.estado_cena = Game.jogando;
+							timeCena = 0;
+						}
+					}
+					}
+					}
+			
+			if(Game.levelAtual == 6) {
+				player.y = 144;
+				Camera.y = Camera.clamp(getY() - (Game.HEIGHT/2),0,World.HEIGHT * 16 - Game.HEIGHT);
+				if (Game.estado_cena == Game.jogando) {
+					//System.exit(1);
+					for(int i=0; i <= Cutscene.vida; i++) {
+						Cutscene.vida --;
+						
+					}
+			for (int i=0; i < entidades.size(); i++ ) {
+				Entidade e = entidades.get(i);
+				e.tick();
+			}
+				} else {
+					if (Game.estado_cena == Game.entrada) {
+							if(player.getX()  < 190 ) {	
+								if (player.getX()  > 0 && player.getX() < 150) {
+								Camera.x = Camera.clamp(getX() - (Game.WIDTH/2),0,World.WIDTH * 16 - Game.WIDTH);
+								}
+								if (player.getX()  > 150 && player.getX() < 190) {
+									Camera.x = Camera.clamp(getX() +(Game.WIDTH),0,World.WIDTH * 16 - Game.WIDTH);
+									}
+								if (player.getX()  > 190) {
+									Camera.x = Camera.clamp(getX() +(Game.WIDTH),0,World.WIDTH * 16 - Game.WIDTH);
+									}
+					
+							player.x++;
+							
+						} else {
+							Game.estado_cena = Game.comecar;
+						}
+					} else if (Game.estado_cena == Game.comecar) {
+						timeCena++;
+						if(timeCena == maxTimeCena) {
+							Game.estado_cena = Game.jogando;
+							timeCena = 0;
+						}
+					}
+					}
+			}	
+			//System.out.println(Cutscene.vida);
 			System.out.println(player.x);
-			System.out.println(player.y);
+			//System.out.println(player.y);
 				
 			
-			if(inimigos.size() == 0 && boss.size() == 0) {
+			if(inimigos.size() == 0 && boss.size() == 0 && cut.size() == 0) {
 			// avançar para o prox level 
 			levelAtual++;
 			if(levelAtual > maxLevel ) {
@@ -206,7 +341,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			timeCena++;
 			}
 			
-		} else if (estadoDoJogo == "Game_Over") {
+		} else if (estadoDoJogo == "Game_Over" || estadoDoJogo == "Fim") {
 			this.framesGameOver ++;
 			if (this.framesGameOver == 30) {
 				this.framesGameOver = 0;
@@ -270,29 +405,62 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			menu.render(g);
 		}
 		if(Game.estado_cena == Game.comecar && Game.levelAtual == 1) {
+			g.setColor(Color.black);
+			g.fillRect(0,0, Game.WIDTH*Game.SCALE, Game.HEIGHT*Game.SCALE);
+			g.setFont(new Font("Arial",Font.BOLD,20));
 			g.setColor(Color.white);
-			g.fillRect(9,9, Game.WIDTH*Game.SCALE-18, Game.HEIGHT*Game.SCALE-18);
-			g.setColor(Color.blue);
-			g.fillRect(10,10, Game.WIDTH*Game.SCALE-20, Game.HEIGHT*Game.SCALE-20);
+			g.drawString("Instruções:", 30,50);
+			g.drawString("1: Use W/A/S/D ou as teclas da seta para fazer o personagem andar", 50,95);
+			g.drawString("2: Use a tecla espaço para atirar", 50,125);
+			g.drawString("3: Ao colidir com os objetos, esses objetos serão coletados", 50,155);
+			g.drawString("4: Não deixe os inimigos chegarem perto, pois eles vão dar dano", 50,185);
+		}
+		if(Game.estado_cena == Game.comecar && Game.levelAtual == 2) {
+			maxTimeCena = 60*7;
+			g.setColor(Color.black);
+			g.fillRect(0,0, Game.WIDTH*Game.SCALE, Game.HEIGHT*Game.SCALE);
+			g.setFont(new Font("Arial",Font.BOLD,20));
+			g.setColor(Color.white);
+			g.drawString("Dicas:", 80,50);
+			g.drawString("1: Lia foi raptada encontre-a", 100,95);
+			g.drawString("2: No caminho tem inimigos derrote eles", 100,125);
+			g.drawString("3: Procure quem fez isso com a Lia.", 100,155);
+		}
+		
+		if(Game.estado_cena == Game.comecar && Game.levelAtual == 3 && timeCena > 60*2) {
+			maxTimeCena = 60*6;
+			g.setColor(Color.black);
+			g.fillOval(120,120, 450,70);
+			g.setFont(new Font("Arial",Font.BOLD,15));
+			g.setColor(Color.white);
+			g.drawString("Lyllian encontra lia ",260,150 );	
+		}
+		
+		if(Game.estado_cena == Game.comecar && Game.levelAtual == 4) {
+			maxTimeCena = 60*7;
+			g.setColor(Color.black);
+			g.fillRect(0,0, Game.WIDTH*Game.SCALE, Game.HEIGHT*Game.SCALE);
 			g.setFont(new Font("Arial",Font.BOLD,20));
 			g.setColor(Color.white);
 			g.drawString("Dicas:", 100,50);
-			g.drawString("1: Lia foi raptada, Você tem que acha-la", 100,80);
-			g.drawString("2: No caminho tem inimigos derrote eles", 100,110);
-			g.drawString("3: Procure quem fez isso com a Lia.", 100,140);
+			g.drawString("1: Lyllian e Lia avistam algo", 100,95);
+			g.drawString("2: Radu está queimando a floresta", 100,125);
+			g.drawString("3: Derrote-o.", 100,155);
 		}
-//		if(Game.estado_cena == Game.comecar && Game.levelAtual == 2) {
-//			g.setColor(Color.white);
-//			g.fillRect(9,9, Game.WIDTH*Game.SCALE-18, Game.HEIGHT*Game.SCALE-18);
-//			g.setColor(Color.blue);
-//			g.fillRect(10,10, Game.WIDTH*Game.SCALE-20, Game.HEIGHT*Game.SCALE-20);
-//			g.setFont(new Font("Arial",Font.BOLD,20));
-//			g.setColor(Color.white);
-//			g.drawString("Dicas:", 100,50);
-//			g.drawString("1: teste", 100,80);
-//			g.drawString("2: No caminho tem inimigos derrote eles", 100,110);
-//			g.drawString("3: Procure quem fez isso com a Lia.", 100,140);
-//		}
+		if(Game.estado_cena == Game.comecar && Game.levelAtual == 5) {
+			maxTimeCena = 60*7;
+			g.setColor(Color.black);
+			g.fillRect(0,0, Game.WIDTH*Game.SCALE, Game.HEIGHT*Game.SCALE);
+			g.setFont(new Font("Arial",Font.BOLD,20));
+			g.setColor(Color.white);
+			g.drawString("Dicas:", 100,50);
+			g.drawString("1: Pai do Radu vem ajudar o Radu", 100,95);
+			g.drawString("2: Lia percebe que foi esse homem que a raptou", 100,125);
+			g.drawString("3: Derrote-os e salve a floresta.", 100,155);
+		}
+		if(Game.estado_cena == Game.comecar && Game.levelAtual == 6) {
+			maxTimeCena = 60*7;
+		}
 		bs.show();
 				
 	}
@@ -351,6 +519,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			if(estadoDoJogo == "Menu") {
 				menu.enter = true;
 			}
+			if (Game.levelAtual == 6)
+				System.exit(1);
 		}
 		if (e.getKeyCode() == KeyEvent.VK_ESCAPE || e.getKeyCode() == KeyEvent.VK_P ) {
 			// entrar na pausa

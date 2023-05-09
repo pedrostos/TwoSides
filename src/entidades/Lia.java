@@ -17,6 +17,7 @@ public class Lia extends Entidade{
 	private int index = 0;
 	private int maxIndex = 2;
 	private boolean estaTomandoDano = false;
+	private BufferedImage[] jumpBoss;
 	private BufferedImage[] rightBoss;
 	private BufferedImage[] leftBoss;
 	public int right_dir = 0 , left_dir = 1;
@@ -26,6 +27,7 @@ public class Lia extends Entidade{
 
 	public Lia(int x, int y, int width, int height, BufferedImage boss_Entidade) {
 		super(x, y, width, height, null);
+		jumpBoss = new BufferedImage[5];
 		rightBoss = new BufferedImage[4];
 		leftBoss = new BufferedImage[4];
 		
@@ -34,9 +36,13 @@ public class Lia extends Entidade{
 		}
 			for (int i=0; i < 4; i++) {
 			leftBoss[i] = Game.spritesheet.getSprite(96 - (i*16), 144, 16, 16);
+			}
+			for (int i=0; i < 5; i++) {
+				jumpBoss[i] = Game.spritesheet.getSprite(80 + (i*16),64, 16, 16);
+			}
 		
 	}
-	}
+	
 
 	public void tick() {
 		if(isColiddingWithPlayer() == false) {
@@ -94,8 +100,11 @@ public class Lia extends Entidade{
 	
 	public void render(Graphics g) {
 		if(!estaTomandoDano) {
-		if(direcao == right_dir) {
+		if(direcao == right_dir && Game.levelAtual != 6) {
 			g.drawImage(rightBoss[index], this.getX() +8  - Camera.x, this.getY() -1 - Camera.y, null);
+			if(direcao == right_dir && Game.levelAtual == 6) {
+				g.drawImage(jumpBoss[index], this.getX() +8  - Camera.x, this.getY() -1 - Camera.y, null);
+			}
 		}else if(direcao == left_dir) {
 		g.drawImage(leftBoss[index], this.getX()+8  - Camera.x, this.getY() -1 - Camera.y, null);	
 		} 	

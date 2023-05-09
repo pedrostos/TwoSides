@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import entidades.Arco;
+import entidades.Cutscene;
 import entidades.Radu;
 import entidades.Entidade;
 import entidades.Lia;
@@ -95,6 +96,20 @@ public class World {
 							Lia gatinha = new Lia(xx*16,yy*16,16,16,null);
 							Game.entidades.add(gatinha);
 							Game.lia.add(gatinha);
+						}else if (pixelAtual == 0xFFe5ba2e) {
+							//cutscene
+							BufferedImage[] buf = new BufferedImage[1];
+							buf[0] = Game.spritesheet.getSprite(0, 96, 16, 16);
+							if ( Game.levelAtual == 3) {
+							Cutscene tempo = new Cutscene(xx*16,yy*16,16,16,null);
+							Game.entidades.add(tempo);
+							Game.cut.add(tempo);
+							}
+							if ( Game.levelAtual == 6) {
+								Cutscene tempo = new Cutscene(xx*16,yy*16,16,16,null);
+								Game.entidades.add(tempo);
+								Game.cut.add(tempo);
+								}
 						}		
 					}
 				}

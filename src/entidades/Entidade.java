@@ -25,6 +25,8 @@ public class Entidade {
 		public static BufferedImage PlayerTomandoHitEsquerda = Game.spritesheet.getSprite(0, 80, 16, 16);
 		public static BufferedImage ChefaoTomandoHitDireita = Game.spritesheet.getSprite(16, 80, 16, 16);
 		public static BufferedImage ChefaoTomandoHitEsquerda = Game.spritesheet.getSprite(32, 80, 16, 16);
+		public static BufferedImage BossMorto = Game.spritesheet.getSprite(128, 96, 16, 16);
+		public static BufferedImage ChefaoMorto = Game.spritesheet.getSprite(144, 96, 16, 16);
 		
 	
 		public double x;
