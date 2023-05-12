@@ -100,9 +100,9 @@ public class Lia extends Entidade{
 	
 	public void render(Graphics g) {
 		if(!estaTomandoDano) {
-		if(direcao == right_dir && Game.levelAtual != 6) {
+		if(direcao == right_dir && Game.levelAtual != 7) {
 			g.drawImage(rightBoss[index], this.getX() +8  - Camera.x, this.getY() -1 - Camera.y, null);
-			if(direcao == right_dir && Game.levelAtual == 6) {
+			if(direcao == right_dir && Game.levelAtual == 7) {
 				g.drawImage(jumpBoss[index], this.getX() +8  - Camera.x, this.getY() -1 - Camera.y, null);
 			}
 		}else if(direcao == left_dir) {

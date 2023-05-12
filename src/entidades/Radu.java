@@ -18,13 +18,14 @@ public class Radu extends Entidade{
 	private int maxFrames = 2;
 	private int index = 0;
 	private int maxIndex = 1;
-	private int vida = 1;
+	public static int vida = 15;
 	private boolean estaTomandoDano = false;
 	private int danoFrames = 10,danoAtual = 0;
 	private BufferedImage Bosstomandohitdireita;
 	private BufferedImage Bosstomandohitesquerda;
 	private BufferedImage[] rightBoss;
 	private BufferedImage[] leftBoss;
+	private BufferedImage[] RaduDoBem;
 	public int right_dir = 0 , left_dir = 1;
 	public int direcao = right_dir;
 	private  boolean moved = false;
@@ -34,7 +35,7 @@ public class Radu extends Entidade{
 		super(x, y, width, height, null);
 		rightBoss = new BufferedImage[2];
 		leftBoss = new BufferedImage[2];
-		//playerDamage = Game.spritesheet.getSprite(0, 48, 16, 16);
+	
 		
 		for (int i=0; i < 2; i++) {
 			rightBoss[i] = Game.spritesheet.getSprite(0 + (i*16),112, 16, 16);
@@ -44,26 +45,27 @@ public class Radu extends Entidade{
 		
 	}
 	}
+	
 
 	public void tick() {
 		moved = false;
 		if(isColiddingWithPlayer() == false) {
 		if((int)x < Game.player.getX() && World.isFree((int)(x+speed), this.getY())
-				&& Game.levelAtual !=6 && !isColidding((int)(x+speed), this.getY())) {
+				 && !isColidding((int)(x+speed), this.getY())) {
 			moved = true;
 			direcao = right_dir;
 			x += speed;
 		} else if ((int)x > Game.player.getX() && World.isFree((int)(x-speed), this.getY())
-				&& Game.levelAtual !=6 && !isColidding((int)(x-speed), this.getY())) {
+				 && !isColidding((int)(x-speed), this.getY())) {
 			moved = true;
 			direcao = left_dir;
 			x -= speed;
 		}
 		if((int)y < Game.player.getY() && World.isFree(this.getX(),(int)(y+speed))
-				&& Game.levelAtual !=6 && !isColidding (this.getX() ,(int)(y+speed))) {
+				 && !isColidding (this.getX() ,(int)(y+speed))) {
 			y += speed;
 		} else if ((int)y > Game.player.getY() && World.isFree(this.getX(),(int)(y-speed))
-				&& Game.levelAtual !=6 && !isColidding(this.getX(),(int)(y-speed))) {
+				 && !isColidding(this.getX(),(int)(y-speed))) {
 			y -= speed;
 		}
 		if (moved) {
@@ -78,7 +80,7 @@ public class Radu extends Entidade{
 		}
 		} else {
 			// estamos colidindo
-			if(Game.rand.nextInt(100) < 10 && Game.levelAtual !=6) {
+			if(Game.rand.nextInt(100) < 10 && Game.levelAtual !=5) {
 				// adicionando som ao tomar hit
 				Sons.hit.tocar();
 				Sons.hit.setVolume(-20);
@@ -101,6 +103,7 @@ public class Radu extends Entidade{
 			seAutoDestroi();
 			return;
 		}
+		
 		if(estaTomandoDano) {
 			this.danoAtual++;
 			if(this.danoAtual == this.danoFrames) {
@@ -158,19 +161,25 @@ public class Radu extends Entidade{
 	
 	public void render(Graphics g) {
 		if(!estaTomandoDano) {
-			if(direcao == right_dir && Game.levelAtual ==6) {
-				g.drawImage(Entidade.BossMorto, this.getX() +8  - Camera.x, this.getY() -1 - Camera.y, null);
-			}
-		if(direcao == right_dir && Game.levelAtual !=6) {
+		if(direcao == right_dir && Game.levelAtual !=5) {
 			g.drawImage(rightBoss[index], this.getX() +8  - Camera.x, this.getY() -1 - Camera.y, null);
+			
 		}else if(direcao == left_dir) {
 		g.drawImage(leftBoss[index], this.getX()+8  - Camera.x, this.getY() -1 - Camera.y, null);	
+		
+		
 		} else if (estaTomandoDano) {
 			
 		}
-	}  else if(direcao == right_dir && Game.levelAtual !=6) {
+
+	}  else if(direcao == right_dir && Game.levelAtual != 5) {
 		g.drawImage(Entidade.BossTomandoHitDireita, this.getX() - Camera.x, this.getY() - Camera.y, null);
+	
 	} else
 		g.drawImage(Entidade.BossTomandoHitEsquerda, this.getX() - Camera.x, this.getY() - Camera.y, null);
+		
+		if(direcao == right_dir && Game.levelAtual == 5) {
+			g.drawImage(BossDoBem, this.getX() - Camera.x, this.getY() - Camera.y, null);
+		}
 }
 }

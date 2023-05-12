@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 
 import entidades.Arco;
 import entidades.Cutscene;
+import entidades.Cutscene2;
 import entidades.Radu;
 import entidades.Entidade;
 import entidades.Lia;
@@ -105,12 +106,22 @@ public class World {
 							Game.entidades.add(tempo);
 							Game.cut.add(tempo);
 							}
-							if ( Game.levelAtual == 6) {
-								Cutscene tempo = new Cutscene(xx*16,yy*16,16,16,null);
-								Game.entidades.add(tempo);
-								Game.cut.add(tempo);
-								}
-						}		
+						}else if (pixelAtual == 0xFF44e3b9) {
+							//cutscene
+							BufferedImage[] buf = new BufferedImage[1];
+							buf[0] = Game.spritesheet.getSprite(0, 96, 16, 16);
+							Cutscene2 tempo2 = new Cutscene2(xx*16,yy*16,16,16,null);
+							Game.entidades.add(tempo2);
+							Game.cut2.add(tempo2);
+						}	
+					else if (pixelAtual == 0xFF44e3b9) {
+						//cutscene 2
+						BufferedImage[] buf = new BufferedImage[1];
+						buf[0] = Game.spritesheet.getSprite(0, 96, 16, 16);
+						Cutscene2 tempo2 = new Cutscene2(xx*16,yy*16,16,16,null);
+						Game.entidades.add(tempo2);
+						Game.cut2.add(tempo2);
+					}	
 					}
 				}
 				

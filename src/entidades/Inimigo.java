@@ -18,7 +18,7 @@ public class Inimigo extends Entidade{
 	private int maxFrames = 20;
 	private int index = 0;
 	private int maxIndex = 1;
-	private int vida = 3;
+	private int vida = 9;
 	private boolean estaTomandoDano = false;
 	private int danoFrames = 10,danoAtual = 0;
 	
@@ -54,7 +54,7 @@ public class Inimigo extends Entidade{
 			if(Game.rand.nextInt(100) < 10) {
 				// adicionando som ao tomar hit
 				Sons.hit.tocar();
-				Sons.hit.setVolume(-20);
+				Sons.hit.setVolume(-25);
 				
 				Game.player.vida -= Game.rand.nextInt(3);
 				Game.player.isDamaged = true;

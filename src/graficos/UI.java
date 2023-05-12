@@ -16,7 +16,7 @@ public class UI {
 	
 
 	public void render (Graphics g) {
-		if(Game.levelAtual != 6) {
+		if(Game.levelAtual != 7) {
 		g.setColor(Color.red);
 		g.fillRect(8, 4,50, 8);
 		g.setColor(Color.green);
@@ -27,7 +27,7 @@ public class UI {
 		g.setFont(new Font("arial",Font.BOLD,10));
 		g.drawString("Fase: " + Game.levelAtual, 100, 8);
 		}
-		if(Game.levelAtual == 6) {
+		if(Game.levelAtual == 7) {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setColor(new Color(0,0,0,100));
 			g.fillRect(0,0, Game.WIDTH*Game.SCALE, Game.HEIGHT*Game.SCALE);
@@ -36,7 +36,7 @@ public class UI {
 			g.drawString("Parabéns, Você venceu o game",30,35);
 			g.setFont(new Font("Arial",Font.BOLD,12));
 			g.setColor(Color.white);
-			g.drawString("Aperte enter para sair ",50,150);
+			g.drawString("Aperte enter para sair ",65,150);
 		}
 	}
 	
