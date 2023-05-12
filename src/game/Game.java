@@ -16,6 +16,7 @@ import java.util.Random;
 import javax.swing.JFrame;
 
 import entidades.Radu;
+import entidades.RaduCutscene;
 import entidades.Cutscene;
 import entidades.Cutscene2;
 import entidades.Entidade;
@@ -45,6 +46,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	public static List<Inimigo> inimigos;
 	public static List<Radu> boss;
 	public static List<PaiDoRadu> chefao;
+	public static List<RaduCutscene> bossCutscene;
 	public static List<TiroDeFlecha> flechas;
 	public static List<Cutscene> cut;
 	public static List<Cutscene2> cut2;
@@ -81,6 +83,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		inimigos = new ArrayList<Inimigo>();
 		boss = new ArrayList<Radu>();
 		chefao = new ArrayList<PaiDoRadu>();
+		bossCutscene = new ArrayList<RaduCutscene>();
 		flechas = new ArrayList<TiroDeFlecha>();
 		cut = new ArrayList<Cutscene>();
 		cut2 = new ArrayList<Cutscene2>();
@@ -262,9 +265,9 @@ public class Game extends Canvas implements Runnable,KeyListener{
 					for(int i=0; i <= Cutscene2.vida; i++) {
 						Cutscene2.vida--;
 					}
-					for(int i=0; i <= Radu.vida; i++) {
+					/*for(int i=0; i <= Radu.vida; i++) {
 						Radu.vida--;
-					}
+					}*/
 			for (int i=0; i < entidades.size(); i++ ) {
 				Entidade e = entidades.get(i);
 				e.tick();
@@ -378,7 +381,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 				timeCena = 0;
 				timeCena++;
 				}
-				if(inimigos.size()  <=0  && boss.size() <= 0 && cut.size() == 0 && cut2.size() == 0 && Game.levelAtual >= 4 && Game.levelAtual < 6) {
+				if(inimigos.size()  <= 0  && boss.size() <= 0 && cut.size() == 0 && cut2.size() == 0 && Game.levelAtual >= 4 && Game.levelAtual < 6) {
 					// avançar para o prox level 
 					levelAtual++;
 					if(levelAtual > maxLevel ) {
@@ -418,9 +421,6 @@ public class Game extends Canvas implements Runnable,KeyListener{
 				levelAtual = levelAtual ;
 				if (Game.levelAtual == 6) {
 					
-				}
-				if (Game.levelAtual == 4) {
-				
 				}
 				String novoMundo = "level" + levelAtual + ".png";
 				World.reiniciarOJogo(novoMundo);

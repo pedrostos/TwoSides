@@ -11,6 +11,7 @@ import entidades.Arco;
 import entidades.Cutscene;
 import entidades.Cutscene2;
 import entidades.Radu;
+import entidades.RaduCutscene;
 import entidades.Entidade;
 import entidades.Lia;
 import entidades.Flechas;
@@ -76,6 +77,13 @@ public class World {
 						}else if (pixelAtual == 0xFFfbf236) {
 							// pixel das flechas
 							Game.entidades.add(new Flechas(xx*16,yy*16,16,16,Entidade.Flecha_Entidade));
+						}else if (pixelAtual == 0xFFd7fcb6) {
+							//pixel do raduCutscene
+							BufferedImage[] buf = new BufferedImage[1];
+							buf[0] = Game.spritesheet.getSprite(0, 96, 16, 16);
+							RaduCutscene bossCutscene = new RaduCutscene(xx*16,yy*16,16,16,null);
+							Game.entidades.add(bossCutscene);
+							Game.bossCutscene.add(bossCutscene);
 						}else if (pixelAtual == 0xFFd77bba) {
 							//pixel do radu
 							BufferedImage[] buf = new BufferedImage[1];

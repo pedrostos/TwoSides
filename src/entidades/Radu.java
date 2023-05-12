@@ -18,14 +18,11 @@ public class Radu extends Entidade{
 	private int maxFrames = 2;
 	private int index = 0;
 	private int maxIndex = 1;
-	public static int vida = 15;
+	private int vida = 15;
 	private boolean estaTomandoDano = false;
 	private int danoFrames = 10,danoAtual = 0;
-	private BufferedImage Bosstomandohitdireita;
-	private BufferedImage Bosstomandohitesquerda;
 	private BufferedImage[] rightBoss;
 	private BufferedImage[] leftBoss;
-	private BufferedImage[] RaduDoBem;
 	public int right_dir = 0 , left_dir = 1;
 	public int direcao = right_dir;
 	private  boolean moved = false;

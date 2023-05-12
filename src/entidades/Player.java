@@ -181,7 +181,7 @@ public class Player extends Entidade{
 
 	public void render(Graphics g) {
 		if(!isDamaged) {
-		if(direcao == right_dir && Game.levelAtual != 6) {
+		if(direcao == right_dir && Game.levelAtual != 7) {
 		g.drawImage(rightPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		if(arco) {
 			//arco para direita
@@ -200,7 +200,7 @@ public class Player extends Entidade{
 	} else {
 		g.drawImage(Entidade.PlayerTomandoHitEsquerda, this.getX() - Camera.x, this.getY() - Camera.y, null);
 	}
-		if(direcao == right_dir && Game.levelAtual == 6) {
+		if(direcao == right_dir && Game.levelAtual == 7) {
 			g.drawImage(jumpPlayer[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		}
 		

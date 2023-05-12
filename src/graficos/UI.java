@@ -10,10 +10,9 @@ import game.Game;
 
 
 public class UI {
-	private boolean mostrarMensagemGameOver = true;
-	private boolean mostrarMensagemDoFim = true;
+
 	
-	
+
 
 	public void render (Graphics g) {
 		if(Game.levelAtual != 7) {
