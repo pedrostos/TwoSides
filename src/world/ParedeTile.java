@@ -7,5 +7,4 @@ public class ParedeTile extends Tile{
 	public ParedeTile(int x, int y, BufferedImage sprite) {
 		super(x, y, sprite);
 	}
-	
 }

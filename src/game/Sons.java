@@ -50,7 +50,6 @@ public class Sons {
 			}
 		}
 	}
-	
 	public static Clips musica = carregarClips("/music.wav",1);
 	public static Clips hit = carregarClips("/tomandoDano.wav",1);
 	
@@ -75,5 +74,4 @@ public class Sons {
 			}
 		}
 	}
-
 }

@@ -1,6 +1,5 @@
 package entidades;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -27,13 +26,11 @@ public class Radu extends Entidade{
 	public int direcao = right_dir;
 	private  boolean moved = false;
 
-
 	public Radu(int x, int y, int width, int height, BufferedImage boss_Entidade) {
 		super(x, y, width, height, null);
 		rightBoss = new BufferedImage[2];
 		leftBoss = new BufferedImage[2];
 	
-		
 		for (int i=0; i < 2; i++) {
 			rightBoss[i] = Game.spritesheet.getSprite(0 + (i*16),112, 16, 16);
 		}
@@ -42,7 +39,6 @@ public class Radu extends Entidade{
 		
 	}
 	}
-	
 
 	public void tick() {
 		moved = false;
@@ -108,11 +104,7 @@ public class Radu extends Entidade{
 				this.estaTomandoDano = false;
 			}
 		}
-		
-		
-
 }
-	
 	
 	public void seAutoDestroi () {
 		Game.boss.remove(this);
@@ -122,7 +114,6 @@ public class Radu extends Entidade{
 	public void isColiddingFlecha() {
 		for (int i = 0; i < Game.flechas.size(); i++) {
 			Entidade e = Game.flechas.get(i);
-			//if (e instanceof TiroDeFlecha) {
 				if(Entidade.isColidding(this, e)) {
 					estaTomandoDano = true;
 					vida -= 3;
@@ -131,7 +122,6 @@ public class Radu extends Entidade{
 				}
 			}
 		}
-	//}
 	
 	public boolean isColiddingWithPlayer () {
 		Rectangle atualInimigo = new Rectangle(this.getX() + maskx ,this.getY() + masky,maskw,maskh);

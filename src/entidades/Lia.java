@@ -23,8 +23,6 @@ public class Lia extends Entidade{
 	public int right_dir = 0 , left_dir = 1;
 	public int direcao = right_dir;
 
-
-
 	public Lia(int x, int y, int width, int height, BufferedImage boss_Entidade) {
 		super(x, y, width, height, null);
 		jumpBoss = new BufferedImage[5];
@@ -43,7 +41,6 @@ public class Lia extends Entidade{
 		
 	}
 	
-
 	public void tick() {
 		if(isColiddingWithPlayer() == false) {
 		if((int)x < Game.player.getX() && World.isFree((int)(x+speed), this.getY())

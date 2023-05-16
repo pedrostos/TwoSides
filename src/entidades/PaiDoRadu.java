@@ -1,6 +1,5 @@
 package entidades;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -32,7 +31,6 @@ public class PaiDoRadu extends Entidade{
 		super(x, y, width, height, null);
 		rightBoss = new BufferedImage[4];
 		leftBoss = new BufferedImage[4];
-		//playerDamage = Game.spritesheet.getSprite(0, 48, 16, 16);
 		
 		for (int i=0; i < 4; i++) {
 			rightBoss[i] = Game.spritesheet.getSprite(32 + (i*16),112, 16, 16);
@@ -106,12 +104,8 @@ public class PaiDoRadu extends Entidade{
 				this.estaTomandoDano = false;
 			}
 		}
-		
-		
-
 }
-	
-	
+		
 	public void seAutoDestroi () {
 		Game.chefao.remove(this);
 		Game.entidades.remove(this);
@@ -120,7 +114,6 @@ public class PaiDoRadu extends Entidade{
 	public void isColiddingFlecha() {
 		for (int i = 0; i < Game.flechas.size(); i++) {
 			Entidade e = Game.flechas.get(i);
-			//if (e instanceof TiroDeFlecha) {
 				if(Entidade.isColidding(this, e)) {
 					estaTomandoDano = true;
 					vida -= 3;
@@ -129,7 +122,6 @@ public class PaiDoRadu extends Entidade{
 				}
 			}
 		}
-	//}
 	
 	public boolean isColiddingWithPlayer () {
 		Rectangle atualInimigo = new Rectangle(this.getX() + maskx ,this.getY() + masky,maskw,maskh);

@@ -94,7 +94,6 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		world = new World("/level1.png");
 		menu = new Menu();
 		//fim
-		
 	}
 	
 	public void initFrame() {
@@ -107,10 +106,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jframe.setVisible(true);
 		jframe.setTitle("TwoSides");
-		
 	}
-	
-	
+
 	public synchronized void start () {
 		thread = new Thread(this);
 		isRunning = true;
@@ -127,7 +124,6 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	}
 	
 	public static void main(String[] args) {
-		
 		Game game = new Game();
 		game.start();
 	}
@@ -195,7 +191,6 @@ public class Game extends Canvas implements Runnable,KeyListener{
 					
 					for(int i=0; i <= Cutscene.vida; i++) {
 						Cutscene.vida --;
-						
 					}
 			for (int i=0; i < entidades.size(); i++ ) {
 				Entidade e = entidades.get(i);
@@ -265,9 +260,6 @@ public class Game extends Canvas implements Runnable,KeyListener{
 					for(int i=0; i <= Cutscene2.vida; i++) {
 						Cutscene2.vida--;
 					}
-					/*for(int i=0; i <= Radu.vida; i++) {
-						Radu.vida--;
-					}*/
 			for (int i=0; i < entidades.size(); i++ ) {
 				Entidade e = entidades.get(i);
 				e.tick();
@@ -330,12 +322,12 @@ public class Game extends Canvas implements Runnable,KeyListener{
 					}
 			
 			if(Game.levelAtual == 7) {
+				Sons.musica.setVolume(-80); 
 				player.y = 144;
-				Camera.y = Camera.clamp(getY() - (Game.HEIGHT/2),0,World.HEIGHT * 16 - Game.HEIGHT);
+				Camera.y = 90;
 				if (Game.estado_cena == Game.jogando) {
 					for(int i=0; i <= Cutscene.vida; i++) {
-						Cutscene.vida --;
-						
+						Cutscene.vida --;	
 					}
 			for (int i=0; i < entidades.size(); i++ ) {
 				Entidade e = entidades.get(i);
@@ -428,13 +420,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		} else if (estadoDoJogo == "Menu") {
 			menu.tick();
 		}
-		System.out.println(chefao.size());
-		System.out.println(boss.size());
-		System.out.println(inimigos.size());
 		}
 		
-	
-	
 	public void render () {
 		BufferStrategy bs = this.getBufferStrategy();
 		if (bs == null) {
@@ -461,7 +448,9 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		g.drawImage(image, 0, 0, WIDTH*SCALE,HEIGHT*SCALE,null);
 		g.setFont(new Font("arial",Font.BOLD,20));
 		g.setColor(Color.white);
+		if (Game.levelAtual != 7) {
 		g.drawString("Flechas: " + player.flechas , 600, 20);
+		}
 		if (estadoDoJogo == "Game_Over") {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setColor(new Color(0,0,0,100));
@@ -475,6 +464,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		} else if (estadoDoJogo == "Menu") {
 			menu.render(g);
 		}
+		
 		if(Game.estado_cena == Game.comecar && Game.levelAtual == 1) {
 			g.setColor(Color.black);
 			g.fillRect(0,0, Game.WIDTH*Game.SCALE, Game.HEIGHT*Game.SCALE);
@@ -486,9 +476,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			g.drawString("3: Se quiser pausar o jogo use a tecla ESC ou a tecla P", 50,155);
 			g.drawString("4: Ao colidir com os objetos, esses objetos serão coletados", 50,185);
 			g.drawString("5: Não deixe os inimigos chegarem perto, pois eles vão dar dano", 50,215);
-			
-			
 		}
+		
 		if(Game.estado_cena == Game.comecar && Game.levelAtual == 2) {
 			maxTimeCena = 60*7;
 			g.setColor(Color.black);
@@ -543,13 +532,13 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			g.drawString("2: Lia percebe que foi esse homem que a raptou", 100,125);
 			g.drawString("3: Derrote-o e salve a floresta.", 100,155);
 		}
+		
 		if(Game.estado_cena == Game.comecar && Game.levelAtual == 7) {
 			maxTimeCena = 60*4;
 		}
-		bs.show();
-				
+		bs.show();		
 	}
-
+	
 	@Override
 	public void run() {
 		long lastTime = System.nanoTime();
@@ -641,7 +630,5 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			// aperta o espaço para começar atirar  S
 			player.tiro =true;
 		}
-		
 	}
-
 }

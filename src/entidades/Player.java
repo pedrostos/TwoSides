@@ -1,18 +1,12 @@
 package entidades;
 
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-
 
 import game.Game;
-import graficos.Spritesheet;
+import game.Sons;
 import world.Camera;
 import world.World;
-
-
-
 
 public class Player extends Entidade{
 	
@@ -29,7 +23,6 @@ public class Player extends Entidade{
 	private BufferedImage[] jumpPlayer;
 	private BufferedImage[] rightPlayer;
 	private BufferedImage[] leftPlayer;
-	//private BufferedImage playerDamage;
 	
 	private boolean arco = false;
 	private int damageFrames = 0;
@@ -45,7 +38,6 @@ public class Player extends Entidade{
 		jumpPlayer = new BufferedImage[5];
 		rightPlayer = new BufferedImage[5];
 		leftPlayer = new BufferedImage[5];
-		//playerDamage = Game.spritesheet.getSprite(0, 48, 16, 16);
 		
 		for (int i=0; i < 5; i++) {
 			rightPlayer[i] = Game.spritesheet.getSprite(0 + (i*16), 0, 16, 16);
@@ -55,10 +47,7 @@ public class Player extends Entidade{
 		}
 			for (int i=0; i < 5; i++) {
 				jumpPlayer[i] = Game.spritesheet.getSprite(80 + (i*16), 64, 16, 16);
-			}
-			
-			
-		
+			}	
 	}
 	
 	public void tick() {
@@ -178,7 +167,6 @@ public class Player extends Entidade{
 		}
 	}
 	
-
 	public void render(Graphics g) {
 		if(!isDamaged) {
 		if(direcao == right_dir && Game.levelAtual != 7) {

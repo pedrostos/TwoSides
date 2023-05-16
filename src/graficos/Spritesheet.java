@@ -21,5 +21,4 @@ public class Spritesheet {
 		public BufferedImage getSprite(int x , int y, int widht , int height) {
 			return spritesheet.getSubimage(x , y , widht , height);
 		}
-
 }

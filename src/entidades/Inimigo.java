@@ -1,6 +1,5 @@
 package entidades;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -81,11 +80,7 @@ public class Inimigo extends Entidade{
 				this.estaTomandoDano = false;
 			}
 		}
-		
-		
-
 }
-	
 	
 	public void seAutoDestroi () {
 		Game.inimigos.remove(this);
@@ -95,7 +90,6 @@ public class Inimigo extends Entidade{
 	public void isColiddingFlecha() {
 		for (int i = 0; i < Game.flechas.size(); i++) {
 			Entidade e = Game.flechas.get(i);
-			//if (e instanceof TiroDeFlecha) {
 				if(Entidade.isColidding(this, e)) {
 					estaTomandoDano = true;
 					vida -= 3;
@@ -104,7 +98,6 @@ public class Inimigo extends Entidade{
 				}
 			}
 		}
-	//}
 	
 	public boolean isColiddingWithPlayer () {
 		Rectangle atualInimigo = new Rectangle(this.getX() + maskx ,this.getY() + masky,maskw,maskh);
@@ -134,11 +127,6 @@ public class Inimigo extends Entidade{
 			g.drawImage(sprites[index], this.getX() - Camera.x, this.getY() - Camera.y, null);
 		 else 
 			g.drawImage(Entidade.InimigoTomandoDano, this.getX() - Camera.x, this.getY() - Camera.y, null);
-			
-			//teste da colisao do inimigo
-			//g.setColor(Color.blue);
-			//g.fillRect(this.getX() + maskx - Camera.x, this.getY() + masky - Camera.y, maskw, maskh);
-		
 	}
 }
  

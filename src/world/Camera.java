@@ -15,5 +15,4 @@ public class Camera {
 		}
 		return Atual;
 	}
-
 }

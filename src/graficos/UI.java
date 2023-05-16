@@ -5,14 +5,10 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-import entidades.Player;
 import game.Game;
 
 
 public class UI {
-
-	
-
 
 	public void render (Graphics g) {
 		if(Game.levelAtual != 7) {
@@ -38,5 +34,4 @@ public class UI {
 			g.drawString("Aperte enter para sair ",65,150);
 		}
 	}
-	
 }

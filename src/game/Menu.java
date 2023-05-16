@@ -9,9 +9,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-
 public class Menu {
-	
 	public String[] opcoes = {"Novo Jogo","Sair"};
 	public int opcaoAtual = 0;
 	public int maxOpcao = opcoes.length - 1;
@@ -43,7 +41,8 @@ public class Menu {
 		if(enter) {
 			//adicionando musica ao começar o jogo
 			Sons.musica.loop();
-			Sons.musica.setVolume(-35);
+			Sons.musica.setVolume(-35); 
+		
 			enter = false;
 			if(opcoes[opcaoAtual] == "Novo Jogo" || opcoes[opcaoAtual] == "Continuar") {
 				Game.estadoDoJogo = "Normal";
@@ -56,10 +55,7 @@ public class Menu {
 	
 	public void render(Graphics g) {
 		//menu
-		
 		Graphics2D g2 = (Graphics2D) g;
-		//g2.setColor(new Color(0,0,0,100));
-		//g2.fillRect(0, 0, Game.WIDTH*Game.SCALE, Game.HEIGHT*Game.SCALE);
 		g.drawImage(telaDeFundo, 0, 0,Game.WIDTH*Game.SCALE,Game.HEIGHT*Game.SCALE, null);
 		g.setColor(Color.black);
 		g.setFont(new Font("arial",Font.BOLD,50));
@@ -78,7 +74,6 @@ public class Menu {
 			g.drawString("--> ", (Game.WIDTH*Game.SCALE) /2 - 120, (Game.WIDTH*Game.SCALE) /2 - 175);
 		}else if (opcoes[opcaoAtual] == "Sair") {
 			g.drawString("-->", (Game.WIDTH*Game.SCALE) /2 - 88, (Game.WIDTH*Game.SCALE) /2 - 125);
-			
 		}
 	}
 	
