@@ -16,7 +16,11 @@ public class Menu {
 	public boolean up,down,enter;
 	public boolean pausa = false;
 	private BufferedImage telaDeFundo;
-	
+
+	/*
+	Construtor que possui try/catch, em que o programa tentará ler a imagem solicitada, se não obter sucesso,
+	cairá no catch definindo e detalhando o erro causado.
+	 */
 	public Menu () {
 		try {
 			telaDeFundo = ImageIO.read(getClass().getResource("/fundoMenu.png"));
@@ -24,8 +28,10 @@ public class Menu {
 			e.printStackTrace();
 		}
 	}
-	
+
+
 	public void tick () {
+		// Estrutura condicional que ao pressionar uma tecla, o programa responderá dentro do menu, indo para a opção desejada.
 		if(up) {
 			up = false;
 			opcaoAtual --;
@@ -39,7 +45,7 @@ public class Menu {
 				opcaoAtual = 0;
 		}
 		if(enter) {
-			//adicionando musica ao começar o jogo
+			//Reproduz a música ao começar o jogo.
 			Sons.musica.loop();
 			Sons.musica.setVolume(-35); 
 		
@@ -52,18 +58,20 @@ public class Menu {
 			}
 		}
 	}
-	
+
+	// Método que renderiza o menu.
 	public void render(Graphics g) {
-		//menu
+		// Menu.
 		Graphics2D g2 = (Graphics2D) g;
 		g.drawImage(telaDeFundo, 0, 0,Game.WIDTH*Game.SCALE,Game.HEIGHT*Game.SCALE, null);
 		g.setColor(Color.black);
 		g.setFont(new Font("arial",Font.BOLD,50));
 		g.drawString("TWO SIDES", (Game.WIDTH*Game.SCALE) /2 - 150, (Game.WIDTH*Game.SCALE) /2 - 250 );
 		
-		// opções do menu
+		// Opções do menu.
 		g.setFont(new Font("arial",Font.BOLD,25));
 		g.setColor(Color.black);
+		// Estrutura condicional que determina se o jogo será iniciado, pausado ou finalizado, dependendo da escolha do jogador.
 		if(pausa == false)
 		g.drawString("Novo Jogo ", (Game.WIDTH*Game.SCALE) /2 - 80, (Game.WIDTH*Game.SCALE) /2 - 175);
 		else

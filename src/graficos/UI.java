@@ -10,6 +10,7 @@ import game.Game;
 
 public class UI {
 
+	// Método que renderiza a HUD do jogo na tela.
 	public void render (Graphics g) {
 		if(Game.levelAtual != 7) {
 		g.setColor(Color.red);

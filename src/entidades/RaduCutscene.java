@@ -18,37 +18,15 @@ public class RaduCutscene extends Entidade{
 	public int direcao = right_dir;
 	private  boolean moved = false;
 
-	public RaduCutscene(int x, int y, int width, int height, BufferedImage boss_Entidade) {
+	// Construtor para a criação do RaduCutscene.
+	public RaduCutscene(int x, int y, int width, int height, BufferedImage RaduCutscene) {
 		super(x, y, width, height, null);
 	}
 
+	// Método para inicializar outros métodos.
 	public void tick() {
 		moved = false;
-		if((int)x < Game.player.getX() && World.isFree((int)(x+speed), this.getY())) {
-			moved = true;
-			direcao = right_dir;
-			x += speed;
-		} else if ((int)x > Game.player.getX() && World.isFree((int)(x-speed), this.getY())){
-			moved = true;
-			direcao = left_dir;
-			x -= speed;
-		}
-		if((int)y < Game.player.getY() && World.isFree(this.getX(),(int)(y+speed))){
-			y += speed;
-		} else if ((int)y > Game.player.getY() && World.isFree(this.getX(),(int)(y-speed))){
-			y -= speed;
-		}
-		if (moved) {
-			frames++;
-			if (frames == maxFrames) {
-				frames = 0;
-				index ++;
-				if (index > maxIndex) {
-					index = 0;
-				}
-			}
-		}
-	
+
 		frames++;
 		if (frames == maxFrames) {
 			frames = 0;
@@ -62,11 +40,14 @@ public class RaduCutscene extends Entidade{
 			return;
 		}	
 }
+
+	// Condição em que determina que se a vida do RaduCutscene for menor ou igual que 0, ele chamará o método "seAutoDestrói".
 	public void seAutoDestroi () {
 		Game.bossCutscene.remove(this);
 		Game.entidades.remove(this);
 	}
-	
+
+	// Método que em que define qual imagem será exibida dependendo da condição.
 	public void render(Graphics g) {
 		
 		if(direcao == right_dir && Game.levelAtual == 5) {

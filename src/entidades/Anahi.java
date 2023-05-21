@@ -4,11 +4,10 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import game.Game;
-import game.Sons;
 import world.Camera;
 import world.World;
 
-public class Player extends Entidade{
+public class Anahi extends Entidade{
 	
 	public boolean right,up,down,left;
 	public int right_dir = 0 , left_dir = 1;
@@ -30,15 +29,16 @@ public class Player extends Entidade{
 	public  double vida = 100 , maxVida = 100;
 	public boolean isDamaged = false;
 	public boolean tiro = false;
-	
 
-	public Player(int x, int y, int width, int height, BufferedImage sprite) {
+	// Construtor para a criação da Anahí.
+	public Anahi(int x, int y, int width, int height, BufferedImage sprite) {
 		super(x, y, width, height, sprite);
 		
 		jumpPlayer = new BufferedImage[5];
 		rightPlayer = new BufferedImage[5];
 		leftPlayer = new BufferedImage[5];
-		
+
+		// Laço de repetição que define qual imagem será exibida a partir do movimento da Anahí.
 		for (int i=0; i < 5; i++) {
 			rightPlayer[i] = Game.spritesheet.getSprite(0 + (i*16), 0, 16, 16);
 		}
@@ -49,7 +49,8 @@ public class Player extends Entidade{
 				jumpPlayer[i] = Game.spritesheet.getSprite(80 + (i*16), 64, 16, 16);
 			}	
 	}
-	
+
+	// Método para inicializar outros métodos, e condicionais que formam a movimentação de Anahí.
 	public void tick() {
 		moved = false;
 		if(right && World.isFree((int)(x + speed),this.getY())) {
@@ -82,7 +83,7 @@ public class Player extends Entidade{
 		this.checkCollisionFlechas();
 		this.checkCollisionArco();
 		
-		// metodo para piscar ao tomar dano
+		// Método para determinar se Anahí está tomando dano.
 		if(isDamaged) {
 			this.damageFrames++;
 			if(this.damageFrames == 8) {
@@ -90,11 +91,12 @@ public class Player extends Entidade{
 				isDamaged = false;
 			}
 		}
-		
-		if(tiro ) {
-			//Criar flechas para atirar
+
+		// Condição que verifica o início dos disparos das flechas.
+		if(tiro) {
+			//Cria flechas para atirar.
 			tiro = false;
-			// verificar se tem o arco e flechas para atirar na direção certa
+			// Verifica se tem o arco e flechas para atirar na direção certa.
 			if(arco && flechas > 0) {
 			flechas --;
 			int dx = 0;
@@ -114,20 +116,24 @@ public class Player extends Entidade{
 			}
 		}
 		
-		// se a vida chegar a 0 o jogo acaba = game over
+		// Condição que determina que se a vida chegar a 0, o jogo acabará.
 		if(vida <= 0) {
 			vida = 0;
 			Game.estadoDoJogo = "Game_Over";
 		}
 		
-		// fazer a camera acompanhar o player e limitando até onde a camera pode ir
-		// pega a posição do jogador e verifica quanto falta pra ele ir para o centro da tela 
-		
+		/*
+		Fazer a camera acompanhar o player e limitar até onde a câmera pode ir e
+		pega a posição do jogador verificando quanto falta pra ele ir para o centro da tela.
+		*/
 		Camera.x = Camera.clamp(getX() - (Game.WIDTH/2),0,World.WIDTH * 16 - Game.WIDTH);
 		Camera.y = Camera.clamp(getY() - (Game.HEIGHT/2),0,World.HEIGHT * 16 - Game.HEIGHT);
 	}
 
-	
+	/*
+	Método que possui uma condicional para verificar se o jogador colide com o pacote de vida e
+	determina o cálculo para o aumento de pontos de vida.
+	 */
 	public void checkCollisionPacoteDeVida() {
 		for (int i=0; i < Game.entidades.size(); i++ ) {
 			Entidade atual = Game.entidades.get(i);
@@ -142,7 +148,11 @@ public class Player extends Entidade{
 			}
 		}
 	}
-	
+
+	/*
+	Método que possui uma condicional para verificar se o jogador colide com as flechas e
+	determina o cálculo para o aumento de flechas possuídas.
+	 */
 	public void checkCollisionFlechas() {
 		for (int i=0; i < Game.entidades.size(); i++ ) {
 			Entidade atual = Game.entidades.get(i);
@@ -154,7 +164,8 @@ public class Player extends Entidade{
 			}
 		}
 	}
-	
+
+	// Método que verifica se o jogador colide com o arco, e se já possui ou não.
 	public void checkCollisionArco() {
 		for (int i=0; i < Game.entidades.size(); i++ ) {
 			Entidade atual = Game.entidades.get(i);
@@ -166,7 +177,8 @@ public class Player extends Entidade{
 			}
 		}
 	}
-	
+
+	// Método que em que define qual imagem será exibida dependendo da condição.
 	public void render(Graphics g) {
 		if(!isDamaged) {
 		if(direcao == right_dir && Game.levelAtual != 7) {

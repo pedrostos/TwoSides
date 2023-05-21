@@ -11,7 +11,8 @@ public class TiroDeFlecha extends Entidade{
 	private double dx;
 	private double dy;
 	private double speed = 4;
-	
+
+	// Construtor para a criação da do tiro de flecha.
 	public TiroDeFlecha(int x, int y, int width , int height, BufferedImage sprite,double dx,double dy) {
 		super(x, y, width, height, sprite);
 		this.dx = dx;
@@ -21,11 +22,10 @@ public class TiroDeFlecha extends Entidade{
 	public void tick() {
 		x += dx*speed;
 		y += dy*speed;
-		
 	}
-		
+
+	// Método que em que define qual imagem será exibida.
 	public void render (Graphics g) {
-	
 		g.setColor(Color.black);
 		g.fillOval(this.getX() - Camera.x, this.getY()  - Camera.y, widht + 4 , height +1);
 	}

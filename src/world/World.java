@@ -17,8 +17,8 @@ import entidades.Lia;
 import entidades.Flechas;
 import entidades.Inimigo;
 import entidades.PacoteDeVida;
-import entidades.PaiDoRadu;
-import entidades.Player;
+import entidades.Luke;
+import entidades.Anahi;
 import game.Game;
 import graficos.Spritesheet;
 
@@ -27,7 +27,11 @@ public class World {
 		public static Tile[] tiles;
 		public static  int WIDTH,HEIGHT;
 		public static final int Tile_Size = 16;
-	
+
+		/*
+		Método que possui um try/catch, em que o programa tenta ler uma imagem pixelizada, mas se não obter sucesso,
+		cairá na catch em que define onde o erro foi causado.
+		 */
 		public World (String path) {
 			try {
 				BufferedImage map = ImageIO.read(getClass().getResource(path));
@@ -37,7 +41,7 @@ public class World {
 				tiles = new Tile[map.getWidth() * map.getHeight()];
 				map.getRGB(0, 0, map.getWidth(), map.getHeight() ,pixels,0,map.getWidth());
 				
-				// looping para rodar cada posição do mapa e reconhecer as cores para representar itens,chão e outra coisas
+				// Looping para rodar cada posição do mapa e reconhecer as cores para representar itens,chão e outra coisas.
 				for (int xx =0; xx < map.getWidth(); xx++) {
 					for(int yy =0; yy < map.getHeight(); yy++) {
 						int pixelAtual = pixels[xx + (yy*map.getWidth())];
@@ -45,23 +49,23 @@ public class World {
 							
 							if(pixelAtual == 0xFF000000 ) {
 								tiles[xx + (yy*WIDTH)] = new ChaoTile(xx*16,yy*16,Tile.Tile_Chao);
-								// pixel do chão
+								// Pixel do chão.
 							}else if (pixelAtual == 0xFF76428a ){	
-								// pixel do chão queimado
+								// Pixel do chão pegando fogo.
 									tiles[xx + (yy*WIDTH)] = new ChaoTile(xx*16,yy*16,Tile.Tile_ChaoQueimado);
 							}
 						else if (pixelAtual == 0xFFFFFFFF) {
-							// pixel da parede
+							// Pixel da parede.
 							tiles[xx + (yy*WIDTH)] = new ParedeTile(xx*16,yy*16,Tile.Tile_Parede);
 						}else if (pixelAtual == 0xFF8a6f30)	 {
-							//pixel da parede com fogo
+							//Pixel da parede com fogo.
 							tiles[xx + (yy*WIDTH)] = new ParedeTile(xx*16,yy*16,Tile.Tile_ParedeQueimada);
 						}else if (pixelAtual == 0xFF5fcde4) {
-							// pixel do personagem
+							// Pixel do personagem.
 							Game.player.setX(xx*16);
 							Game.player.setY(yy*16);
 						}else if (pixelAtual == 0xFFac3232) {
-							//pixel dos inimigos
+							// Pixel dos inimigos.
 							BufferedImage[] buf = new BufferedImage[2];
 							buf[0] = Game.spritesheet.getSprite(96, 16, 16, 16);
 							buf[1] = Game.spritesheet.getSprite(112, 16, 16, 16);
@@ -69,67 +73,47 @@ public class World {
 							Game.entidades.add(inimigo);
 							Game.inimigos.add(inimigo);
 						}else if (pixelAtual == 0xFFdf7126) {
-							// pixel do arco
+							// Pixel do arco.
 							Game.entidades.add(new Arco(xx*16,yy*16,16,16,Entidade.Arco_Entidade));
 						}else if (pixelAtual == 0xFFac0c1f) {
-							//pixel do pacote de vida
+							//Pixel do pacote de vida.
 							Game.entidades.add(new PacoteDeVida(xx*16,yy*16,16,16,Entidade.PacoteDeVida_Entidade));
 						}else if (pixelAtual == 0xFFfbf236) {
-							// pixel das flechas
+							// Pixel das flechas.
 							Game.entidades.add(new Flechas(xx*16,yy*16,16,16,Entidade.Flecha_Entidade));
 						}else if (pixelAtual == 0xFFd7fcb6) {
-							//pixel do raduCutscene
-							BufferedImage[] buf = new BufferedImage[1];
-							buf[0] = Game.spritesheet.getSprite(0, 96, 16, 16);
+							// Pixel do raduCutscene.
 							RaduCutscene bossCutscene = new RaduCutscene(xx*16,yy*16,16,16,null);
 							Game.entidades.add(bossCutscene);
 							Game.bossCutscene.add(bossCutscene);
 						}else if (pixelAtual == 0xFFd77bba) {
-							//pixel do radu
-							BufferedImage[] buf = new BufferedImage[1];
-							buf[0] = Game.spritesheet.getSprite(0, 96, 16, 16);
+							//Pixel do Radu.
 							Radu boss = new Radu(xx*16,yy*16,16,16,null);
 							Game.entidades.add(boss);
 							Game.boss.add(boss);
 						}else if (pixelAtual == 0xFF09fa04) {
-							//pixel do paidoradu
-							BufferedImage[] buf = new BufferedImage[1];
-							buf[0] = Game.spritesheet.getSprite(0, 96, 16, 16);
-							PaiDoRadu chefao = new PaiDoRadu(xx*16,yy*16,16,16,null);
+							// Pixel do Luke.
+							Luke chefao = new Luke(xx*16,yy*16,16,16,null);
 							Game.entidades.add(chefao);
 							Game.chefao.add(chefao);
 						}else if (pixelAtual == 0xFFff28ff) {
-							//pixel da Lia
-							BufferedImage[] buf = new BufferedImage[1];
-							buf[0] = Game.spritesheet.getSprite(0, 96, 16, 16);
+							// Pixel da Lia.
 							Lia gatinha = new Lia(xx*16,yy*16,16,16,null);
 							Game.entidades.add(gatinha);
 							Game.lia.add(gatinha);
 						}else if (pixelAtual == 0xFFe5ba2e) {
-							//cutscene
-							BufferedImage[] buf = new BufferedImage[1];
-							buf[0] = Game.spritesheet.getSprite(0, 96, 16, 16);
+							// Cutscene fase 3.
 							if ( Game.levelAtual == 3) {
 							Cutscene tempo = new Cutscene(xx*16,yy*16,16,16,null);
 							Game.entidades.add(tempo);
 							Game.cut.add(tempo);
 							}
 						}else if (pixelAtual == 0xFF44e3b9) {
-							//cutscene
-							BufferedImage[] buf = new BufferedImage[1];
-							buf[0] = Game.spritesheet.getSprite(0, 96, 16, 16);
+							// Cutscene fase 5.
 							Cutscene2 tempo2 = new Cutscene2(xx*16,yy*16,16,16,null);
 							Game.entidades.add(tempo2);
 							Game.cut2.add(tempo2);
-						}	
-					else if (pixelAtual == 0xFF44e3b9) {
-						//cutscene 2
-						BufferedImage[] buf = new BufferedImage[1];
-						buf[0] = Game.spritesheet.getSprite(0, 96, 16, 16);
-						Cutscene2 tempo2 = new Cutscene2(xx*16,yy*16,16,16,null);
-						Game.entidades.add(tempo2);
-						Game.cut2.add(tempo2);
-					}	
+						}
 					}
 				}
 				
@@ -138,7 +122,7 @@ public class World {
 			}
 		}
 		
-		//verificar se vai colidir com algo
+		// Método que verifica se haverá colisão com algo.
 		public static boolean isFree(int xnext, int ynext) {
 			int x1 = xnext / Tile_Size;
 			int y1 = ynext / Tile_Size;
@@ -157,19 +141,20 @@ public class World {
 					|| (tiles[x3 + (y3*World.WIDTH)] instanceof ParedeTile)
 					|| (tiles[x4 + (y4*World.WIDTH)] instanceof ParedeTile ));
 		}
-		
+
+		// Método que reinicia o jogo se for desejado.
 		public static void reiniciarOJogo (String level) {
 			Game.entidades = new ArrayList<Entidade>();
 			Game.inimigos = new ArrayList<Inimigo>();
 			Game.spritesheet = new Spritesheet("/spritesheeet.png");
-			Game.player = new Player(0,0,16,16,Game.spritesheet.getSprite(0, 0, 16, 16));
+			Game.player = new Anahi(0,0,16,16,Game.spritesheet.getSprite(0, 0, 16, 16));
 			Game.entidades.add(Game.player);
 			Game.world = new World("/" + level);
 			return;
 		}
 
+		// Método que renderiza o "mundo" do jogo.
 		public void render(Graphics g) {
-			
 			int xstart = Camera.x/16;
 			int ystart = Camera.y/16;
 			int xfinal = xstart + (Game.WIDTH/16);
