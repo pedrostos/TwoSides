@@ -62,21 +62,25 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	public  boolean mostrarMensagemGameOver = true;
 	private int framesGameOver = 0;
 	private boolean reiniciarOJogo = false;
-	
-		//cutscene 
+
 	public static int entrada = 1;
 	public static int comecar = 2;
 	public static int jogando = 3;
 	public static int estado_cena = entrada ; 
 	public int timeCena = 0, maxTimeCena = 60*15;
-	
-	public Game ( ) {
+
+	// Construtor que inicializa o jogo.
+	public Game () {
+		// Gera um número randômico e atribui a uma variável.
 		rand = new Random();
+		// Chamada do método da interface KeyListener.
 		addKeyListener(this);
+		// Chamada do método da setPreferred e alterando a dimensão da interface gráfica.
 		setPreferredSize(new Dimension(WIDTH*SCALE,HEIGHT*SCALE));
+		// Chamada do método da inteface gráfica.
 		initFrame();
-		
-		//Inicializando objeto
+
+		// Instânciando objetos.
 		ui = new UI();
 		image = new BufferedImage (WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
 		entidades = new ArrayList<Entidade>();
@@ -93,11 +97,12 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		entidades.add(player);
 		world = new World("/level1.png");
 		menu = new Menu();
-		//fim
+		// Fim da instância de objetos.
 	}
-	
+
+	// Método inicializador da interface gráfica.
 	public void initFrame() {
-		
+
 		jframe = new JFrame();
 		jframe.add(this);
 		jframe.setResizable(false);
@@ -108,12 +113,14 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		jframe.setTitle("TwoSides");
 	}
 
+	// Método que instânica as threads, otimizando a performance do jogo.
 	public synchronized void start () {
 		thread = new Thread(this);
 		isRunning = true;
 		thread.start();
 	}
-	
+
+	// Método que encerra as threads.
 	public synchronized void stop () {
 		isRunning = false;
 		try {
@@ -122,12 +129,14 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			e.printStackTrace();
 		}
 	}
-	
+
+	// Método main que instância o jogo e inicializa.
 	public static void main(String[] args) {
 		Game game = new Game();
 		game.start();
 	}
-	
+
+	// Método que possui condicionais para definir os estados e leveis do jogo.
 	public void tick () {
 		if(estadoDoJogo == "Normal") {
 			reiniciarOJogo = false;
@@ -361,8 +370,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 					}
 			}	
 
+			// Estrutura condicional que dependendo da condição, decide avançar de level ou reiniciar o jogo.
 			if(inimigos.size() == 0  && cut.size() == 0 && cut2.size() == 0 && Game.levelAtual < 4) {
-				// avançar para o prox level 
 				levelAtual++;
 				if(levelAtual > maxLevel ) {
 					levelAtual = levelAtual ;
@@ -386,7 +395,6 @@ public class Game extends Canvas implements Runnable,KeyListener{
 					timeCena++;
 					}
 				if(inimigos.size() <= 0  && chefao.size() <= 0 && cut.size() == 0 && cut2.size() == 0 && Game.levelAtual >= 6 ) {
-					// avançar para o prox level 
 					levelAtual++;
 					if(levelAtual > maxLevel ) {
 						levelAtual = levelAtual ;
@@ -399,6 +407,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 					}
 			
 		} else if (estadoDoJogo == "Game_Over" ) {
+			// Condicional que se o jogador falhar na fase, mostrará uma mensagem de "Game Over".
 			this.framesGameOver ++;
 			if (this.framesGameOver == 30) {
 				this.framesGameOver = 0;
@@ -408,6 +417,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 						this.mostrarMensagemGameOver = true;
 				
 			} if(reiniciarOJogo) {
+				// Condicional que reinicia o jogo, caso o jogador queira.
 				reiniciarOJogo = false;
 				estadoDoJogo = "Normal";
 				levelAtual = levelAtual ;
@@ -421,7 +431,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			menu.tick();
 		}
 		}
-		
+
+	// Método para renderização do jogo.
 	public void render () {
 		BufferStrategy bs = this.getBufferStrategy();
 		if (bs == null) {
@@ -431,8 +442,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		Graphics g = image.getGraphics();
 		g.setColor(new Color(0,0,0));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
-		
-		//renderização do jogo
+
 		world.render(g);
 		for (int i=0; i < entidades.size(); i++ ) {
 			Entidade e = entidades.get(i);
@@ -442,7 +452,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			flechas.get(i).render(g);;
 		}
 		ui.render(g);
-		//fim
+
 		g.dispose();
 		g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, WIDTH*SCALE,HEIGHT*SCALE,null);
@@ -451,6 +461,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		if (Game.levelAtual != 7) {
 		g.drawString("Flechas: " + player.flechas , 600, 20);
 		}
+
+		// Condicional em que se o jogador falhar na fase, aparecerá uma mensagem de "Game Over" e "Reiniciar" na tela.
 		if (estadoDoJogo == "Game_Over") {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setColor(new Color(0,0,0,100));
@@ -464,7 +476,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 		} else if (estadoDoJogo == "Menu") {
 			menu.render(g);
 		}
-		
+
+		// Condicional que define a mensagem (instruções) que será exibida na fase 1.
 		if(Game.estado_cena == Game.comecar && Game.levelAtual == 1) {
 			g.setColor(Color.black);
 			g.fillRect(0,0, Game.WIDTH*Game.SCALE, Game.HEIGHT*Game.SCALE);
@@ -477,7 +490,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			g.drawString("4: Ao colidir com os objetos, esses objetos serão coletados", 50,185);
 			g.drawString("5: Não deixe os inimigos chegarem perto, pois eles vão dar dano", 50,215);
 		}
-		
+
+		// Condicional que define a mensagem (dicas) que será exibida na fase 2.
 		if(Game.estado_cena == Game.comecar && Game.levelAtual == 2) {
 			maxTimeCena = 60*7;
 			g.setColor(Color.black);
@@ -489,7 +503,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			g.drawString("2: No caminho tem inimigos derrote eles", 100,125);
 			g.drawString("3: Procure quem fez isso com a Lia.", 100,155);
 		}
-		
+
+		// Condicional que define a mensagem que será exibida na fase 3.
 		if(Game.estado_cena == Game.comecar && Game.levelAtual == 3 && timeCena > 60*2) {
 			maxTimeCena = 60*6;
 			g.setColor(Color.black);
@@ -498,7 +513,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			g.setColor(Color.white);
 			g.drawString("Anahí encontra lia ",260,150 );	
 		}
-		
+
+		// Condicional que define a mensagem (dicas) que será exibida na fase 4.
 		if(Game.estado_cena == Game.comecar && Game.levelAtual == 4) {
 			maxTimeCena = 60*7;
 			g.setColor(Color.black);
@@ -510,7 +526,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			g.drawString("2: Radu está queimando a floresta", 100,125);
 			g.drawString("3: Derrote-o.", 100,155);
 		}
-				
+
+		// Condicional que define a mensagem (diálogo) que será exibida na fase 5.
 				if(Game.estado_cena == Game.comecar && Game.levelAtual == 5 ){
 					maxTimeCena = 60*10;
 					g.setColor(Color.black);
@@ -520,7 +537,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 					g.drawString("- Obrigada por me salvar... Estou de volta, Anahí", 115,140);
 					g.drawString("- Meu pai Luke estava me manipulando", 115,165);
 				}
-				
+
+		// Condicional que define a mensagem (dicas) que será exibida na fase 6.
 		if(Game.estado_cena == Game.comecar && Game.levelAtual == 6){
 			maxTimeCena = 60*7;
 			g.setColor(Color.black);
@@ -532,7 +550,8 @@ public class Game extends Canvas implements Runnable,KeyListener{
 			g.drawString("2: Lia percebe que foi esse homem que a raptou", 100,125);
 			g.drawString("3: Derrote-o e salve a floresta.", 100,155);
 		}
-		
+
+		// Condicional que define o tempo da cutscene da fase 7.
 		if(Game.estado_cena == Game.comecar && Game.levelAtual == 7) {
 			maxTimeCena = 60*4;
 		}
@@ -540,6 +559,7 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	}
 	
 	@Override
+	// Método que executa cálculo para mostrar o FPS do jogo.
 	public void run() {
 		long lastTime = System.nanoTime();
 		double amountOfTicks = 60.0;
@@ -572,23 +592,24 @@ public class Game extends Canvas implements Runnable,KeyListener{
 	}
 
 	@Override
+	// Método que escuta os eventos de teclas do jogador, com a inteface KeyListener.
 	public void keyPressed(KeyEvent e) {
+			// Move para direita quando pressionado a seta pra direita ou a tecla D.
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
 			player.right = true;
-			// mover para direita pressionando a seta pra direita ou a tecla D
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
+			// Move para esquerda quando pressionado a seta pra esquerda ou a tecla A.
 			player.left = true;
-			//mover para esquerda pressionando a seta da esquerda ou a tecla A
 		}
 		if(e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
+			// Move para cima quando pressionado a seta pra cima ou a tecla W.
 			player.up = true;
-			// mover para cima pressionando a seta pra cima ou a tecla W
 		}	else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
+			// Move para baixo quando pressionado a seta pra baixo ou a tecla S.
 			player.down = true;
-			//mover para baixo pressionando a seta pra baixo ou a tecla S
-		}	
+		}
 		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-			// selecionar a opção do menu com o enter
+			// Seleciona a opção do menu com o enter.
 			reiniciarOJogo = true;
 			if(estadoDoJogo == "Menu") {
 				menu.enter = true;
@@ -597,37 +618,39 @@ public class Game extends Canvas implements Runnable,KeyListener{
 				System.exit(1);
 		}
 		if (e.getKeyCode() == KeyEvent.VK_ESCAPE || e.getKeyCode() == KeyEvent.VK_P ) {
-			// entrar na pausa
+			// Condição em que se as teclas "ESC" ou "P" forem apertadas, abrirá o menu de pause.
 			estadoDoJogo = "Menu";
 			menu.pausa = true;
 		}
 	}
 
 	@Override
+	// Método que possui condionais que definem quando o jogador para de pressionar alguma tecla.
 	public void keyReleased(KeyEvent e) {
-	
 		if(e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_D) {
-			// parar de mover para direita quando não pressionar a seta pra direita ou a tecla D
+			// Para de mover para direita quando deixa de pressionar a seta pra direita ou a tecla D.
 			player.right = false;
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_A) {
-			//parar de mover para esquerda quando não pressionar a seta da esquerda ou a tecla A
+			// Para de mover para esquerda quando deixa de pressionar a seta pra esqueda ou a tecla A.
 			player.left = false;
 		}
 		if(e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_W) {
-			// parar de mover para cima quando não pressionar a seta pra cima ou a tecla W
+			// Para de mover para cima quando deixa de pressionar a seta pra cima ou a tecla W.
 			player.up = false;
+			// Se o estado do jogo for no menu, o jogo moverá para a opção acima.
 			if (estadoDoJogo == "Menu") {
 				menu.up = true;
 			}
 		}	else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_S) {
-			//parar de mover para baixo quando não pressionar a seta pra baixo ou a tecla S
+			// Para de mover para baixo quando deixa de pressionar a seta pra baixo ou a tecla S.
 			player.down = false;
+			// Se o estado do jogo for no menu, o jogo moverá para a opção abaixo.
 			if (estadoDoJogo == "Menu") {
 				menu.down = true;
 			}
 			
 		} if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-			// aperta o espaço para começar atirar  S
+			// Condicional que se apertado a tecla "ESPAÇO", haverá o disparo da flecha.
 			player.tiro =true;
 		}
 	}

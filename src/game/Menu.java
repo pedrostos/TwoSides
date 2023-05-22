@@ -63,14 +63,19 @@ public class Menu {
 	public void render(Graphics g) {
 		// Menu.
 		Graphics2D g2 = (Graphics2D) g;
+		g2.setColor(new Color(0,0,0,100));
+		g.fillRect(0,0, Game.WIDTH*Game.SCALE, Game.HEIGHT*Game.SCALE);
 		g.drawImage(telaDeFundo, 0, 0,Game.WIDTH*Game.SCALE,Game.HEIGHT*Game.SCALE, null);
-		g.setColor(Color.black);
+		g.setColor(Color.green);
 		g.setFont(new Font("arial",Font.BOLD,50));
 		g.drawString("TWO SIDES", (Game.WIDTH*Game.SCALE) /2 - 150, (Game.WIDTH*Game.SCALE) /2 - 250 );
 		
 		// Opções do menu.
+		Graphics2D g3 = (Graphics2D) g;
+		g3.setColor(new Color(0,0,0,100));
+		g.fillRect(0,0, Game.WIDTH*Game.SCALE, Game.HEIGHT*Game.SCALE);
 		g.setFont(new Font("arial",Font.BOLD,25));
-		g.setColor(Color.black);
+		g.setColor(Color.white);
 		// Estrutura condicional que determina se o jogo será iniciado, pausado ou finalizado, dependendo da escolha do jogador.
 		if(pausa == false)
 		g.drawString("Novo Jogo ", (Game.WIDTH*Game.SCALE) /2 - 80, (Game.WIDTH*Game.SCALE) /2 - 175);
